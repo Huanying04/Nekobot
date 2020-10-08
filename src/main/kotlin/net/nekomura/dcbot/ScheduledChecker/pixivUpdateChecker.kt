@@ -6,13 +6,12 @@ import net.nekomura.dcbot.Config
 import net.nekomura.dcbot.Enums.ConfigJsonArrayData
 import net.nekomura.dcbot.Enums.ConfigLongData
 import net.nekomura.dcbot.Enums.PiXivUserArtistType
-import net.nekomura.dcbot.Utils.Md5
 import net.nekomura.dcbot.Utils.Md5.toMD5
 import net.nekomura.dcbot.Utils.PiXiv
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
-import java.util.ArrayList
+import java.util.*
 
 fun pixivUpdateChecker(bot: JDA) {
     val followIDsJsonArray = Config.get(ConfigJsonArrayData.FOLLOW_PIXIV)
@@ -25,7 +24,7 @@ fun pixivUpdateChecker(bot: JDA) {
 
     for (s in followIDs) {
         val followID = s.toLong()
-        var file = File("./temp/pixiv/pixiv-user-${followID}.json")
+        val file = File("./temp/pixiv/pixiv-user-${followID}.json")
         file.parentFile.mkdirs()
         var content: String
         val userNow = PiXiv.getUserProfileInfo(followID)
