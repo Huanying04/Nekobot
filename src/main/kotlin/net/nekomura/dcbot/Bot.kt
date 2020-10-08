@@ -28,10 +28,8 @@ fun main(args: Array<String>) {
     }
 
     val bot = JDABuilder.createDefault(Config.get(ConfigStringData.TOKEN))
-            .setActivity(Activity.playing("貓村幻影"))
             .addEventListeners(CommandListener())
             .build()
-    println("Build Successfully!")
 
     val scheduledChecker: ScheduledExecutorService = Executors.newScheduledThreadPool(5)
     scheduledChecker.scheduleWithFixedDelay({
