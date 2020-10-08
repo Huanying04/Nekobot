@@ -74,10 +74,7 @@ class CommandListener: ListenerAdapter() {
 
                 }else if (command == "anime" || command == "illustration" || command == "i" || command == "a") {
 
-                    val mode: PiXivSearchMode = if (event.isFromType(ChannelType.TEXT) && textChannel.isNSFW)
-                        PiXivSearchMode.SAFE
-                    else
-                        PiXivSearchMode.SAFE
+                    val mode = PiXivSearchMode.SAFE
 
                     val search = (Config.jsonArrayToArrayList(Config.get(ConfigJsonArrayData.RANDOM_PIXIV_SEARCH_KEYWORDS)) as ArrayList<String>).random()
                     val order = arrayOf(PiXivSearchOrder.NEW_TO_OLD, PiXivSearchOrder.OLD_TO_NEW).random()
@@ -97,27 +94,7 @@ class CommandListener: ListenerAdapter() {
                     eb.addField("ID", "[$pixivId](https://www.pixiv.net/artworks/$pixivId)", true)
                     eb.setImage("attachment://${image.toMD5()}.$type")
                     channel.sendFile(image, "${image.toMD5()}.$type").embed(eb.build()).queue()
-                }/*else if (command == "r18") {
-                    if (event.isFromType(ChannelType.TEXT) && textChannel.isNSFW) {
-                        val searchIri = arrayOf(500, 500, 500, 1000, 1000, 1000, 1000, 1000, 5000, 5000, 5000, 5000, 5000, 10000, 20000, 30000, 50000).random()
-                        val order = arrayOf(PiXivSearchOrder.NEW_TO_OLD, PiXivSearchOrder.OLD_TO_NEW).random()
-                        val pageMax = PiXiv.getSearchMaxPage("${searchIri}users入り", PiXivSearchArtistType.Illustrations, order, PiXivSearchMode.R18, PiXivSearchSMode.S_TAG, PiXivSearchType.Illust)
-                        val page = (1..pageMax).random()
-                        val json = JSONObject(PiXiv.search("${searchIri}users入り", page, PiXivSearchArtistType.Illustrations, order, PiXivSearchMode.R18, PiXivSearchSMode.S_TAG, PiXivSearchType.Illust))
-
-                        val max = json.getJSONObject("body").getJSONObject("illust").getJSONArray("data").length()
-                        val pixivId = json.getJSONObject("body").getJSONObject("illust").getJSONArray("data").getJSONObject((0 until max).random()).getString("id").toLong()
-                        val image = PiXiv.getImage(pixivId)
-                        val type = PiXiv.getImageType(pixivId)
-
-                        eb.setTitle("隨機pixiv圖片")
-                        eb.addField("ID", "[$pixivId](https://www.pixiv.net/artworks/$pixivId)", true)
-                        eb.setImage("attachment://${image.toMD5()}.$type")
-                        channel.sendFile(image, "${image.toMD5()}.$type").embed(eb.build()).queue()
-                    }else {
-                        channel.sendMessage("此頻道不是NSFW，已停止發送").queue()
-                    }
-                }*/else if (command == "meow") {
+                }else if (command == "meow") {
 
                     val sb = StringBuffer()
                     val meow = arrayOf("喵", " ", "")
