@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.0'
+    id'com.github.johnrengelman.shadow' version '4.0.4'
+}
+
+group 'net.nekomura.dcbot'
+version '1.1'
+
+repositories {
+    jcenter()
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'net.dv8tion:JDA:4.2.0_204'
+    compile group: 'com.jagrosh', name: 'jda-utilities', version: '3.0.1'
+    compile group: 'me.duncte123', name: 'botCommons', version: '1.0.45'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
+
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    compile group: 'org.json', name: 'json', version: '20090211'
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.7.2'
+    compile group: 'org.apache.commons', name: 'commons-text', version: '1.9'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'net.nekomura.dcbot.BotKt'
+    }
+}
