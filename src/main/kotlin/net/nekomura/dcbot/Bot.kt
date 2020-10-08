@@ -1,17 +1,10 @@
 package net.nekomura.dcbot
 
-import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
 import net.nekomura.dcbot.Enums.*
 import net.nekomura.dcbot.ScheduledChecker.minecraftUpdateChecker
 import net.nekomura.dcbot.ScheduledChecker.pixivUpdateChecker
-import net.nekomura.dcbot.Utils.Md5
-import net.nekomura.dcbot.Utils.PiXiv
-import net.nekomura.dcbot.Utils.PiXiv.getUserArtistList
-import org.json.JSONArray
-import org.json.JSONObject
-import java.io.File
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -36,7 +29,6 @@ fun main(args: Array<String>) {
 
     val bot = JDABuilder.createDefault(Config.get(ConfigStringData.TOKEN))
             .setActivity(Activity.playing("貓村幻影"))
-            .addEventListeners(Listener())
             .addEventListeners(CommandListener())
             .build()
     println("Build Successfully!")

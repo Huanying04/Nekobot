@@ -69,36 +69,4 @@ object Config {
         val file = File("./config.json")
         file.writeText(allJson)
     }
-
-    @Deprecated("Deprecated")
-    fun getString(key: ConfigData): String?{
-        return getConfig().getString(key.name)
-    }
-
-    @Deprecated("Deprecated")
-    fun getInt(key: ConfigData): Int{
-        return getConfig().getInt(key.name)
-    }
-
-    @Deprecated("Deprecated")
-    fun getLong(key: ConfigData): Long{
-        return getConfig().getLong(key.name)
-    }
-
-    @Deprecated("Deprecated")
-    fun getDouble(key: ConfigData): Double{
-        return getConfig().getDouble(key.name)
-    }
-
-    @Deprecated("Deprecated")
-    fun getArray(key: ConfigData): ArrayList<String> {
-        val array = getConfig().getJSONArray(key.name)
-        val arrayList = ArrayList<String>()
-
-        for (i in 0 until array.length()) {
-            arrayList.add(array.get(i).toString())
-        }
-
-        return arrayList
-    }
 }
