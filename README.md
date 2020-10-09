@@ -55,7 +55,7 @@ Minecraft更新推播頻道
 
 格式: <指令前綴><指令名稱> <參數...>
 
-#### <指令前綴>setting pixiv follow <參數>
+#### setting pixiv follow <參數>
 參數有以下三種:
 * add
 添加pixiv用戶更新推播名單。後面必須在接一個pixiv用戶id。
@@ -71,7 +71,7 @@ Minecraft更新推播頻道
 ![pixiv remove示例](https://i.imgur.com/kG3wV7A.png "示例")
 * list
 將pixiv用戶更新推播名單列出來
-#### <指令前綴>setting listener <參數>
+#### setting listener <參數>
 參數有以下二種:
 * pixiv
 開啟或關閉pixiv用戶更新推播功能
