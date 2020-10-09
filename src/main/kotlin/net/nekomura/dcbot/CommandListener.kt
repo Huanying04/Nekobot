@@ -13,10 +13,10 @@ import kotlin.system.exitProcess
 
 class CommandListener: ListenerAdapter() {
 
-    private var eb = EmbedBuilder().setColor(0xde452a)
+    private var eb = EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16))
 
     override fun onMessageReceived(event: MessageReceivedEvent) {
-        eb = EmbedBuilder().setColor(0xde452a)
+        eb = EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16))
 
         val prefix = Config.get(ConfigStringData.PREFIX)
 
@@ -29,7 +29,7 @@ class CommandListener: ListenerAdapter() {
 
         val msg = message.contentDisplay
 
-        var command: String =
+        val command: String =
             if (msg.startsWith(prefix!!)) msg.substring(1)
             else msg
 
@@ -65,9 +65,48 @@ class CommandListener: ListenerAdapter() {
 
                     exitProcess(0)
 
-                }else if (command == "setting"
+                }else if (command.startsWith("setting")
                         && event.author.idLong == Config.get(ConfigLongData.OWNER)) {
-
+                    val frag = command.split(" ")
+                    if (frag.size >= 4) {
+                        if (frag[1] == "pixiv") {
+                            if (frag[2] == "follow") {
+                                if (frag[3] == "add" && frag.size >= 5) {
+                                    val add = frag[4].toInt()
+                                    val config = Config.getConfig()
+                                    val array = Config.get(ConfigJsonArrayData.FOLLOW_PIXIV)
+                                    if (array.indexOf(add) == -1) {  //不存在
+                                        array.put(add)
+                                        config.put(ConfigJsonArrayData.FOLLOW_PIXIV.toString(), array)
+                                        Config.writeConfig(config.toString())
+                                        channel.sendMessage("添加成功! `$add`").queue()
+                                    }else {  //存在
+                                        channel.sendMessage("`$add`已經存在").queue()
+                                    }
+                                }else if (frag[3] == "list") {
+                                    val array = Config.get(ConfigJsonArrayData.FOLLOW_PIXIV)
+                                    val follow = Config.jsonArrayToArrayList(array) as ArrayList<Int>
+                                    val sb = StringBuffer("> **pixiv推播用戶清單**")
+                                    for (i in follow) {
+                                        sb.append("\n$i")
+                                    }
+                                    channel.sendMessage(sb.toString()).queue()
+                                }else if (frag[3] == "remove" && frag.size >= 5) {
+                                    val remove = frag[4].toInt()
+                                    val config = Config.getConfig()
+                                    val array = Config.get(ConfigJsonArrayData.FOLLOW_PIXIV)
+                                    if (array.indexOf(remove) != -1) {
+                                        array.remove(array.indexOf(remove))
+                                        config.put(ConfigJsonArrayData.FOLLOW_PIXIV.toString(), array)
+                                        Config.writeConfig(config.toString())
+                                        channel.sendMessage("成功移除! `$remove`").queue()
+                                    }else {
+                                        channel.sendMessage("`$remove`不存在").queue()
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }else if (command == "hi") {
 
                     channel.sendMessage("你好呀!").queue()
@@ -136,7 +175,7 @@ class CommandListener: ListenerAdapter() {
                             val json = JSONObject(URL("https://saucenao.com/search.php?url=$url&output_type=2").readText())
 
                             var warning = String()
-                            var result = String()
+                            var result: String
                             if(json.getJSONObject("header").getInt("status") != 0)
                                 channel.sendMessage("API出現錯誤\r\n錯誤內容：${json.getJSONObject("header").getString("message")}").queue()
                             else {

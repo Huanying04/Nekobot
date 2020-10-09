@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDA
 import net.nekomura.dcbot.Config
 import net.nekomura.dcbot.Enums.ConfigLongData
+import net.nekomura.dcbot.Enums.ConfigStringData
 import net.nekomura.dcbot.Utils.Minecraft
 import org.json.JSONObject
 import java.io.File
@@ -17,7 +18,7 @@ fun minecraftUpdateChecker(bot: JDA) {
         val versionManifestOld = JSONObject(file.readText())
 
         if (versionManifestNow.getJSONObject("latest").toString() != versionManifestOld.getJSONObject("latest").toString()) {
-            val eb = EmbedBuilder().setColor(0xde452a)
+            val eb = EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16))
             if (versionManifestNow.getJSONObject("latest").getString("release") != versionManifestOld.getJSONObject("latest").getString("release")) {
                 eb.setTitle("Minecraft發布最新版本了！")
             }else if (versionManifestNow.getJSONObject("snapshot").getString("snapshot") != versionManifestOld.getJSONObject("latest").getString("release")) {

@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.JDA
 import net.nekomura.dcbot.Config
 import net.nekomura.dcbot.Enums.ConfigJsonArrayData
 import net.nekomura.dcbot.Enums.ConfigLongData
+import net.nekomura.dcbot.Enums.ConfigStringData
 import net.nekomura.dcbot.Enums.PiXivUserArtistType
 import net.nekomura.dcbot.Utils.Md5.toMD5
 import net.nekomura.dcbot.Utils.PiXiv
@@ -65,7 +66,7 @@ fun pixivUpdateChecker(bot: JDA) {
                             mangaList.last()
                         }
 
-                        val eb = EmbedBuilder().setColor(0xde452a)
+                        val eb = EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16))
 
                         val byte = PiXiv.getImage(illustId)
 
@@ -78,10 +79,10 @@ fun pixivUpdateChecker(bot: JDA) {
                         eb.addField("簡介", PiXiv.getRawDescription(illustId), false)
                         eb.addField("標籤", PiXiv.getTagsArrayList(illustId).toString(), false)
                         if (!PiXiv.isAdult(illustId))
-                            bot.getTextChannelById(759391018729734164)!!.sendFile(byte, "${byte.toMD5()}.${PiXiv.getImageType(illustId)}").embed(eb.build()).queue()
+                            bot.getTextChannelById(Config.get(ConfigLongData.PIXIV_PUSH_NOTIFICATION_CHANNEL))!!.sendFile(byte, "${byte.toMD5()}.${PiXiv.getImageType(illustId)}").embed(eb.build()).queue()
                         else {
                             eb.setDescription("為了防止觸及Discord禁止兒童色情暴力等，不發送圖片")
-                            bot.getTextChannelById(759751788009095188)!!.sendMessage(eb.build()).queue()
+                            bot.getTextChannelById(Config.get(ConfigLongData.PIXIV_R18_PUSH_NOTIFICATION_CHANNEL))!!.sendMessage(eb.build()).queue()
                         }
                     }
                 } else if ((jsonNow.getJSONObject("body").get("illusts") is JSONObject
@@ -112,7 +113,7 @@ fun pixivUpdateChecker(bot: JDA) {
                             mangaList.last()
                         }
 
-                        val eb = EmbedBuilder().setColor(0xde452a)
+                        val eb = EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16))
 
                         val byte = PiXiv.getImage(illustId)
 
