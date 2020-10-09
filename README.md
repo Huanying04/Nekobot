@@ -3,7 +3,7 @@ Discord 機器人
 ## 機器人設定
 先開啟[config.json](https://github.com/Huanying04/DiscordRobot/blob/master/config.json "config.json")文件設定以下參數: 
 * **TOKEN**  
-機器人TOKEN。設定成你的機器人Token。不知道在哪裡的進入[Discord Application](https://discord.com/developers/applications "Discord Application")選擇你的機器人然後左邊有個**Bot**進去之後就能看到Token了。
+機器人TOKEN。設定成你的機器人Token。不知道在哪裡的進入[Discord Developer Portal](https://discord.com/developers/applications)選擇你的機器人然後左邊有個**Bot**進去之後就能看到Token了。
 * **OWNER**  
 機器人的持有者。就是你自己的ID。
 * **PIXIV_PHPSESSID**  
