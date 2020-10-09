@@ -10,7 +10,10 @@ import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
-
+/**
+ * @author 貓村幻影
+ * 使用之前請先將config.json中的TOKEN、OWNER、PIXIV_PUSH_NOTIFICATION_CHANNEL、PIXIV_R18_PUSH_NOTIFICATION_CHANNEL、MINECRAFT_PUSH_NOTIFICATION_CHANNEL、MINECRAFT_UPDATE_CHECKER、PIXIV_UPDATE_CHECKER、FOLLOW_PIXIV設定好
+ */
 fun main(args: Array<String>) {
     if (Config.get(ConfigStringData.TOKEN)!!.isEmpty()) {
         val scanner = Scanner(System.`in`)

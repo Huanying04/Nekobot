@@ -12,7 +12,7 @@ import java.io.File
 fun minecraftUpdateChecker(bot: JDA) {
     val file = File("./temp/minecraft/version_manifest.json")
     file.parentFile.mkdirs()
-    val versionManifestNow = Minecraft.versionManifest()
+    val versionManifestNow = Minecraft.getVersionManifest()
 
     if (!file.createNewFile()) {  //file exists
         val versionManifestOld = JSONObject(file.readText())

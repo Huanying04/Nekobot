@@ -1,6 +1,5 @@
 ﻿package net.nekomura.dcbot.Utils
 
-import net.nekomura.dcbot.Config
 import net.nekomura.dcbot.Config.get
 import net.nekomura.dcbot.Enums.*
 import net.nekomura.dcbot.Sort
@@ -367,7 +366,7 @@ object PiXiv {
      * @param page 搜尋結果之頁數，pixiv搜尋一頁最多60個作品
      */
     fun search(keywords: String, page: Int): String {
-        return search(keywords, page, PiXivSearchArtistType.Illustrations, PiXivSearchOrder.NEW_TO_OLD, PiXivSearchMode.SAFE, PiXivSearchSMode.S_TAG, PiXivSearchType.Illust)
+        return search(keywords, page, PiXivSearchArtistType.Illustrations, PiXivSearchOrder.NEW_TO_OLD, PiXivSearchMode.SAFE, PiXivSearchSMode.S_TAG, PiXivSearchType.ILLUST)
     }
 
     /**

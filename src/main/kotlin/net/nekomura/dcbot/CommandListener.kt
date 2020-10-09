@@ -69,39 +69,61 @@ class CommandListener: ListenerAdapter() {
                         && event.author.idLong == Config.get(ConfigLongData.OWNER)) {
                     val frag = command.split(" ")
                     if (frag.size >= 4) {
-                        if (frag[1] == "pixiv") {
-                            if (frag[2] == "follow") {
-                                if (frag[3] == "add" && frag.size >= 5) {
-                                    val add = frag[4].toInt()
-                                    val config = Config.getConfig()
-                                    val array = Config.get(ConfigJsonArrayData.FOLLOW_PIXIV)
-                                    if (array.indexOf(add) == -1) {  //不存在
-                                        array.put(add)
-                                        config.put(ConfigJsonArrayData.FOLLOW_PIXIV.toString(), array)
-                                        Config.writeConfig(config.toString())
-                                        channel.sendMessage("添加成功! `$add`").queue()
-                                    }else {  //存在
-                                        channel.sendMessage("`$add`已經存在").queue()
+                        when (frag[1]) {
+                            "pixiv" -> {
+                                when (frag[2]) {
+                                    "follow" -> {
+                                        if (frag[3] == "add" && frag.size >= 5) {
+                                            val add = frag[4].toInt()
+                                            val config = Config.getConfig()
+                                            val array = Config.get(ConfigJsonArrayData.FOLLOW_PIXIV)
+                                            if (array.indexOf(add) == -1) {  //不存在
+                                                array.put(add)
+                                                config.put(ConfigJsonArrayData.FOLLOW_PIXIV.toString(), array)
+                                                Config.writeConfig(config.toString())
+                                                channel.sendMessage("添加成功! `$add`").queue()
+                                            }else {  //存在
+                                                channel.sendMessage("`$add`已經存在").queue()
+                                            }
+                                        }else if (frag[3] == "list") {
+                                            val array = Config.get(ConfigJsonArrayData.FOLLOW_PIXIV)
+                                            val follow = Config.jsonArrayToArrayList(array) as ArrayList<Int>
+                                            val sb = StringBuffer("> **pixiv推播用戶清單**")
+                                            for (i in follow) {
+                                                sb.append("\n$i")
+                                            }
+                                            channel.sendMessage(sb.toString()).queue()
+                                        }else if (frag[3] == "remove" && frag.size >= 5) {
+                                            val remove = frag[4].toInt()
+                                            val config = Config.getConfig()
+                                            val array = Config.get(ConfigJsonArrayData.FOLLOW_PIXIV)
+                                            if (array.indexOf(remove) != -1) {
+                                                array.remove(array.indexOf(remove))
+                                                config.put(ConfigJsonArrayData.FOLLOW_PIXIV.toString(), array)
+                                                Config.writeConfig(config.toString())
+                                                channel.sendMessage("成功移除! `$remove`").queue()
+                                            }else {
+                                                channel.sendMessage("`$remove`不存在").queue()
+                                            }
+                                        }
                                     }
-                                }else if (frag[3] == "list") {
-                                    val array = Config.get(ConfigJsonArrayData.FOLLOW_PIXIV)
-                                    val follow = Config.jsonArrayToArrayList(array) as ArrayList<Int>
-                                    val sb = StringBuffer("> **pixiv推播用戶清單**")
-                                    for (i in follow) {
-                                        sb.append("\n$i")
-                                    }
-                                    channel.sendMessage(sb.toString()).queue()
-                                }else if (frag[3] == "remove" && frag.size >= 5) {
-                                    val remove = frag[4].toInt()
-                                    val config = Config.getConfig()
-                                    val array = Config.get(ConfigJsonArrayData.FOLLOW_PIXIV)
-                                    if (array.indexOf(remove) != -1) {
-                                        array.remove(array.indexOf(remove))
-                                        config.put(ConfigJsonArrayData.FOLLOW_PIXIV.toString(), array)
+                                }
+                            }
+                            "listener" -> {
+                                when (frag[2]) {
+                                    "pixiv" -> {
+                                        val switch = frag[3].toBoolean()
+                                        val config = Config.getConfig()
+                                        config.put(ConfigBooleanData.PIXIV_UPDATE_CHECKER.toString(), switch)
                                         Config.writeConfig(config.toString())
-                                        channel.sendMessage("成功移除! `$remove`").queue()
-                                    }else {
-                                        channel.sendMessage("`$remove`不存在").queue()
+                                        channel.sendMessage("已將`PIXIV_UPDATE_CHECKER`設為`$switch`").queue()
+                                    }
+                                    "minecraft" -> {
+                                        val switch = frag[3].toBoolean()
+                                        val config = Config.getConfig()
+                                        config.put(ConfigBooleanData.MINECRAFT_UPDATE_CHECKER.toString(), switch)
+                                        Config.writeConfig(config.toString())
+                                        channel.sendMessage("已將`MINECRAFT_UPDATE_CHECKER`設為`$switch`").queue()
                                     }
                                 }
                             }
@@ -117,9 +139,9 @@ class CommandListener: ListenerAdapter() {
 
                     val search = (Config.jsonArrayToArrayList(Config.get(ConfigJsonArrayData.RANDOM_PIXIV_SEARCH_KEYWORDS)) as ArrayList<String>).random()
                     val order = arrayOf(PiXivSearchOrder.NEW_TO_OLD, PiXivSearchOrder.OLD_TO_NEW).random()
-                    val pageMax = PiXiv.getSearchMaxPage(search, PiXivSearchArtistType.Illustrations, order, mode, PiXivSearchSMode.S_TAG, PiXivSearchType.Illust)
+                    val pageMax = PiXiv.getSearchMaxPage(search, PiXivSearchArtistType.Illustrations, order, mode, PiXivSearchSMode.S_TAG, PiXivSearchType.ILLUST)
                     val page = (1..pageMax).random()
-                    val json = JSONObject(PiXiv.search(search, page, PiXivSearchArtistType.Illustrations, order, mode, PiXivSearchSMode.S_TAG, PiXivSearchType.Illust))
+                    val json = JSONObject(PiXiv.search(search, page, PiXivSearchArtistType.Illustrations, order, mode, PiXivSearchSMode.S_TAG, PiXivSearchType.ILLUST))
 
                     val max = json.getJSONObject("body").getJSONObject("illust").getJSONArray("data").length()
                     val pixivId = json.getJSONObject("body").getJSONObject("illust").getJSONArray("data").getJSONObject((0 until max).random()).getString("id").toLong()
