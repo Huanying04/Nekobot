@@ -2,7 +2,7 @@
 
 enum class ConfigStringData {
     /**
-     * Discord Robot Token
+     * Discord機器人的Token
      */
     TOKEN,
 
@@ -12,7 +12,7 @@ enum class ConfigStringData {
     PREFIX,
 
     /**
-     * pixiv登入的PIXIV_PHPSESSID
+     * pixiv登入時cookie中的PHPSESSID
      */
     PIXIV_PHPSESSID,
 
