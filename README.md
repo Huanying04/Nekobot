@@ -6,7 +6,9 @@
 * **OWNER**  
 機器人的持有者。就是你自己的ID。
 * **PIXIV_PHPSESSID**  
-pixiv的PHPSESSID。因為做不出登入所以就用PHPSESSID代替啦~(喂
+pixiv的PHPSESSID，在cookie裡，自己去找。因為做不出登入所以就用PHPSESSID代替啦~(喂
+
+   > **注意：**PIXIV_PHPSESSID會**因為登出而失效**，如果登出了就拿新的代替。
 * **PIXIV_UPDATE_CHECKER**  
 是否開啟pixiv用戶更新推播
 * **MINECRAFT_UPDATE_CHECKER**  
