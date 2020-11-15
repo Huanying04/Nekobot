@@ -19,5 +19,10 @@ enum class ConfigStringData {
     /**
      * 嵌入訊息的顏色
      */
-    EMBED_MESSAGE_COLOR
+    EMBED_MESSAGE_COLOR,
+
+    /**
+     * User Agent
+     */
+    USER_AGENT
 }

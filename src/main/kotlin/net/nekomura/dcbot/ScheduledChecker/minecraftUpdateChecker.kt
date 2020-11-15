@@ -20,9 +20,9 @@ fun minecraftUpdateChecker(bot: JDA) {
         if (versionManifestNow.getJSONObject("latest").toString() != versionManifestOld.getJSONObject("latest").toString()) {
             val eb = EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16))
             if (versionManifestNow.getJSONObject("latest").getString("release") != versionManifestOld.getJSONObject("latest").getString("release")) {
-                eb.setTitle("Minecraft發布最新版本了！")
+                eb.setTitle("Minecraft發布新版本了！")
             }else if (versionManifestNow.getJSONObject("snapshot").getString("snapshot") != versionManifestOld.getJSONObject("latest").getString("release")) {
-                eb.setTitle("Minecraft發布最新快照了！")
+                eb.setTitle("Minecraft發布新快照了！")
             }
             eb.addField("當前正式版本", Minecraft.getLatestVersion(), true)
             eb.addField("當前快照版本", Minecraft.getLatestSnapshot(), true)

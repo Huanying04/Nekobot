@@ -24,5 +24,6 @@
   "PIXIV_UPDATE_CHECKER": false,
   "TOKEN": "",
   "EMBED_MESSAGE_COLOR": "de452a",
-  "first_use": true
+  "first_use": true,
+  "USER_AGENT": ""
 }

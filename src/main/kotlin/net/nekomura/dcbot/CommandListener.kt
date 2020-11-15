@@ -6,9 +6,13 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.nekomura.dcbot.Enums.*
 import net.nekomura.dcbot.Utils.Md5.toMD5
-import net.nekomura.dcbot.Utils.PiXiv
+import net.nekomura.utils.jixiv.Enums.*
+import net.nekomura.utils.jixiv.Illustration
+import net.nekomura.utils.jixiv.Pixiv
 import org.json.JSONObject
 import java.net.URL
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.system.exitProcess
 
 class CommandListener: ListenerAdapter() {
@@ -135,24 +139,32 @@ class CommandListener: ListenerAdapter() {
 
                 }else if (command == "anime" || command == "illustration" || command == "i" || command == "a") {
 
-                    val mode = PiXivSearchMode.SAFE
+                    val mode = PixivSearchMode.SAFE
 
-                    val search = (Config.jsonArrayToArrayList(Config.get(ConfigJsonArrayData.RANDOM_PIXIV_SEARCH_KEYWORDS)) as ArrayList<String>).random()
-                    val order = arrayOf(PiXivSearchOrder.NEW_TO_OLD, PiXivSearchOrder.OLD_TO_NEW).random()
-                    val pageMax = PiXiv.getSearchMaxPage(search, PiXivSearchArtistType.Illustrations, order, mode, PiXivSearchSMode.S_TAG, PiXivSearchType.ILLUST)
-                    val page = (1..pageMax).random()
-                    val json = JSONObject(PiXiv.search(search, page, PiXivSearchArtistType.Illustrations, order, mode, PiXivSearchSMode.S_TAG, PiXivSearchType.ILLUST))
+                    val pixiv = Pixiv(Config.get(ConfigStringData.PIXIV_PHPSESSID), Config.get(ConfigStringData.USER_AGENT))
 
-                    val max = json.getJSONObject("body").getJSONObject("illust").getJSONArray("data").length()
-                    val pixivId = json.getJSONObject("body").getJSONObject("illust").getJSONArray("data").getJSONObject((0 until max).random()).getString("id").toLong()
-                    val artistPage = PiXiv.getPageCount(pixivId)
-                    var image = PiXiv.getImage(pixivId, (0 until artistPage).random(), PiXivImageUrlType.ORIGINAL)
+
+                    val keywords = (Config.jsonArrayToArrayList(Config.get(ConfigJsonArrayData.RANDOM_PIXIV_SEARCH_KEYWORDS)) as ArrayList<String>).random()
+                    val order = arrayOf(PixivSearchOrder.NEW_TO_OLD, PixivSearchOrder.OLD_TO_NEW).random()
+                    val tempResult = pixiv.search(keywords, 1, PixivSearchArtworkType.Illustrations, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.Illust)
+                    val lastPage = tempResult.lastPageIndex
+                    val page = (1..lastPage).random()
+                    val result = pixiv.search(keywords, page, PixivSearchArtworkType.Illustrations, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.Illust)
+
+                    val max = result.pageResultCount
+                    val artwork = result.ids[(0 until max).random()]
+
+                    val i = Illustration(Config.get(ConfigStringData.PIXIV_PHPSESSID), Config.get(ConfigStringData.USER_AGENT))
+                    val info = i.get(artwork)
+
+                    val artistPage = (0 until info.pageCount).random()
+                    var image = info.getImage(artistPage, PixivImageSize.Original)
                     if (image.size > 8388608)
-                        image = PiXiv.getImage(pixivId, (0 until artistPage).random(), PiXivImageUrlType.REGULAR)
-                    val type = PiXiv.getImageType(pixivId)
+                        image = info.getImage(artistPage, PixivImageSize.Regular)
+                    val type = info.getImageFileFormat(artistPage)
 
                     eb.setTitle("隨機pixiv圖片")
-                    eb.addField("ID", "[$pixivId](https://www.pixiv.net/artworks/$pixivId)", true)
+                    eb.addField("ID", "[$artwork](https://www.pixiv.net/artworks/$artwork)", true)
                     eb.setImage("attachment://${image.toMD5()}.$type")
                     channel.sendFile(image, "${image.toMD5()}.$type").embed(eb.build()).queue()
                 }else if (command == "meow") {
@@ -178,17 +190,21 @@ class CommandListener: ListenerAdapter() {
                 }else if (command.startsWith("pixiv")) {
                     val frag = command.split(" ")
 
-                    val illustId = frag[1].toLong()
-                    val byte = PiXiv.getImage(illustId)
+                    val illustId = frag[1].toInt()
 
-                    eb.setImage("attachment://${byte.toMD5()}.${PiXiv.getImageType(illustId)}")
-                    eb.addField("作者", "[${PiXiv.getAuthorName(illustId)}](https://www.pixiv.net/users/${PiXiv.getUserID(illustId)})", false)
+                    val i = Illustration(Config.get(ConfigStringData.PIXIV_PHPSESSID), Config.get(ConfigStringData.USER_AGENT))
+                    val info = i.get(illustId)
+
+                    val byte = info.getImage(0, PixivImageSize.Original)
+
+                    eb.setImage("attachment://${byte.toMD5()}.${info.getImageFileFormat(0)}")
+                    eb.addField("作者", "[${info.authorName}](https://www.pixiv.net/users/${info.authorID})", false)
                     eb.addField("ID", "[$illustId](https://www.pixiv.net/artworks/$illustId)", true)
-                    eb.addField("頁數", JSONObject(PiXiv.getArtworkInfo(illustId)).getJSONObject("illust").getJSONObject(illustId.toString()).getInt("pageCount").toString(), true)
-                    eb.addField("標題", PiXiv.getTitle(illustId), false)
-                    eb.addField("簡介", PiXiv.getRawDescription(illustId), false)
-                    eb.addField("標籤", PiXiv.getTagsArrayList(illustId).toString(), false)
-                    channel.sendFile(byte, "${byte.toMD5()}.${PiXiv.getImageType(illustId)}").embed(eb.build()).queue()
+                    eb.addField("頁數", info.pageCount.toString(), true)
+                    eb.addField("標題", info.title, false)
+                    eb.addField("簡介", info.rawDescription, false)
+                    eb.addField("標籤", Arrays.toString(info.tags), false)
+                    channel.sendFile(byte, "${byte.toMD5()}.${info.getImageFileFormat(0)}").embed(eb.build()).queue()
                 }else if (command.startsWith("saucenao")) {
                     val file = event.message.attachments
                     for (f in file) {
@@ -207,7 +223,17 @@ class CommandListener: ListenerAdapter() {
                                     when (json.getJSONArray("results").getJSONObject(test).getJSONObject("header").getInt("index_id")) {
                                         5 -> {
                                             //pixiv
-                                            if (PiXiv.getArtworkPageHtml(json.getJSONArray("results").getJSONObject(test).getJSONObject("data").getLong("pixiv_id")).indexOf("<meta name=\"preload-data\" id=\"meta-preload-data\" content='") != -1) {
+                                            val i = Illustration(Config.get(ConfigStringData.PIXIV_PHPSESSID), Config.get(ConfigStringData.USER_AGENT))
+                                            var exist: Boolean
+
+                                            try {
+                                                i.get(json.getJSONArray("results").getJSONObject(test).getJSONObject("data").getInt("pixiv_id"))
+                                                exist = true
+                                            }catch (e: Throwable) {
+                                                exist = false
+                                            }
+
+                                            if (exist) {
                                                 index = test
                                                 type = 5
                                                 break
