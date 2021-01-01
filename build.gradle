@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'net.dv8tion:JDA:4.2.0_204'
+    implementation 'net.dv8tion:JDA:4.2.0_225'
     compile group: 'com.jagrosh', name: 'jda-utilities', version: '3.0.1'
     compile group: 'me.duncte123', name: 'botCommons', version: '1.0.45'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
@@ -41,4 +41,8 @@ jar {
     manifest {
         attributes 'Main-Class': 'net.nekomura.dcbot.BotKt'
     }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
 }

@@ -1,7 +1,6 @@
 package net.nekomura.dcbot
 
 import net.dv8tion.jda.api.JDABuilder
-import net.dv8tion.jda.api.entities.Activity
 import net.nekomura.dcbot.Enums.*
 import net.nekomura.dcbot.ScheduledChecker.minecraftUpdateChecker
 import net.nekomura.dcbot.ScheduledChecker.pixivUpdateChecker
@@ -45,6 +44,7 @@ fun main(args: Array<String>) {
 
     val bot = JDABuilder.createDefault(Config.get(ConfigStringData.TOKEN))
             .addEventListeners(CommandListener())
+            .addEventListeners(Listener())
             .build()
 
     val scheduledChecker: ScheduledExecutorService = Executors.newScheduledThreadPool(5)
