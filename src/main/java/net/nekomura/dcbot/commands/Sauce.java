@@ -62,6 +62,11 @@ public class Sauce implements ICommand {
                             index = test;
                             type = 38;
                             break;
+                        }else if (index_id == 41) {
+                            //Twitter
+                            index = test;
+                            type = 41;
+                            break;
                         }else {
                             index = test;
                             type = 5;
@@ -72,6 +77,8 @@ public class Sauce implements ICommand {
 
                     if (Float.parseFloat(json.getJSONArray("results").getJSONObject(index).getJSONObject("header").getString("similarity")) < 80) {
                         warning = "結果與原圖相似度只有" + json.getJSONArray("results").getJSONObject(index).getJSONObject("header").getString("similarity") + "%，結果僅供參考\r\n";
+                    }else {
+                        warning = "相似度: " + json.getJSONArray("results").getJSONObject(index).getJSONObject("header").getString("similarity") + "%\r\n";
                     }
                     switch (type) {
                         case 18:
@@ -79,6 +86,7 @@ public class Sauce implements ICommand {
                             result = json.getJSONArray("results").getJSONObject(index).getJSONObject("data").getString("jp_name");
                             break;
                         case 5:
+                        case 41:
                         default:
                             result = json.getJSONArray("results").getJSONObject(index).getJSONObject("data").getJSONArray("ext_urls").getString(0);
                             break;

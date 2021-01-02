@@ -3,9 +3,7 @@ package net.nekomura.dcbot.commands.Managers;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.nekomura.dcbot.Config;
 import net.nekomura.dcbot.Enums.ConfigStringData;
-import net.nekomura.dcbot.commands.PixivIllustration;
-import net.nekomura.dcbot.commands.RandomAnimeIllustration;
-import net.nekomura.dcbot.commands.Sauce;
+import net.nekomura.dcbot.commands.*;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -19,6 +17,11 @@ public class CommandManager {
         addCommand(new RandomAnimeIllustration());
         addCommand(new PixivIllustration());
         addCommand(new Sauce());
+        addCommand(new RandomAnimeIllustrationNSFWAble());
+        addCommand(new RandomAnimeIllustrationR18());
+        addCommand(new Search());
+        addCommand(new SearchNSFWAble());
+        addCommand(new SearchR18());
     }
 
     private final List<ICommand> commands = new ArrayList<>();
@@ -47,19 +50,23 @@ public class CommandManager {
     }
 
     public void handle(GuildMessageReceivedEvent event) throws Exception {
-        String[] split = event.getMessage().getContentRaw()
-                            .replaceFirst("(?i)" + Pattern.quote(Objects.requireNonNull(Config.get(ConfigStringData.PREFIX))), "")
-                            .split("\\s+");
-        String invoke = split[0].toLowerCase();
-        ICommand cmd = this.getCommand(invoke);
+        try {
+            String[] split = event.getMessage().getContentRaw()
+                    .replaceFirst("(?i)" + Pattern.quote(Objects.requireNonNull(Config.get(ConfigStringData.PREFIX))), "")
+                    .split("\\s+");
+            String invoke = split[0].toLowerCase();
+            ICommand cmd = this.getCommand(invoke);
 
-        if(cmd != null) {
-            event.getChannel().sendTyping().queue();
-            List<String> args = Arrays.asList(split).subList(1, split.length);
+            if (cmd != null) {
+                event.getChannel().sendTyping().queue();
+                List<String> args = Arrays.asList(split).subList(1, split.length);
 
-            CommandContext ctx = new CommandContext(event, args);
+                CommandContext ctx = new CommandContext(event, args);
 
-            cmd.handle(ctx);
+                cmd.handle(ctx);
+            }
+        }catch (Throwable e) {
+            event.getChannel().sendMessage("錯誤發生！\r\n```" + e.toString() + "```\r\n請聯繫管理員或稍後重試。").queue();
         }
     }
 }

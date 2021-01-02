@@ -5,13 +5,6 @@ import net.dv8tion.jda.api.entities.ChannelType
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.nekomura.dcbot.Enums.*
-import net.nekomura.dcbot.Utils.Md5.toMD5
-import net.nekomura.utils.jixiv.Enums.*
-import net.nekomura.utils.jixiv.Illustration
-import net.nekomura.utils.jixiv.Pixiv
-import org.json.JSONObject
-import java.net.URL
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.system.exitProcess
 
