@@ -8,8 +8,8 @@ import net.nekomura.dcbot.Enums.ConfigJsonArrayData
 import net.nekomura.dcbot.Enums.ConfigLongData
 import net.nekomura.dcbot.Enums.ConfigStringData
 import net.nekomura.dcbot.Utils.Md5.toMD5
-import net.nekomura.utils.jixiv.Enums.artwork.PixivArtworkType
-import net.nekomura.utils.jixiv.Enums.artwork.PixivImageSize
+import net.nekomura.utils.jixiv.enums.artwork.PixivArtworkType
+import net.nekomura.utils.jixiv.enums.artwork.PixivImageSize
 import net.nekomura.utils.jixiv.Illustration
 import net.nekomura.utils.jixiv.Novel
 import net.nekomura.utils.jixiv.Pixiv

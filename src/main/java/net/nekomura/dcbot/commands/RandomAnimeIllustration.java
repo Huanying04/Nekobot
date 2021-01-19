@@ -4,11 +4,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.nekomura.dcbot.Config;
 import net.nekomura.dcbot.Enums.ConfigJsonArrayData;
 import net.nekomura.dcbot.Enums.ConfigStringData;
-import net.nekomura.dcbot.Listener;
 import net.nekomura.dcbot.Utils.Md5;
-import net.nekomura.utils.jixiv.Enums.*;
-import net.nekomura.utils.jixiv.Enums.artwork.PixivImageSize;
-import net.nekomura.utils.jixiv.Enums.search.*;
+import net.nekomura.utils.jixiv.enums.artwork.PixivImageSize;
+import net.nekomura.utils.jixiv.enums.search.*;
 import net.nekomura.utils.jixiv.Illustration;
 import net.nekomura.utils.jixiv.IllustrationInfo;
 import net.nekomura.utils.jixiv.Pixiv;
@@ -20,7 +18,6 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomAnimeIllustration implements net.nekomura.dcbot.commands.Managers.ICommand {
-
 
     @Override
     public void handle(net.nekomura.dcbot.commands.Managers.CommandContext ctx) throws Exception {

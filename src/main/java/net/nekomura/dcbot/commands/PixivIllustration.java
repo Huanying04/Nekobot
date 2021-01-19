@@ -6,7 +6,7 @@ import net.nekomura.dcbot.Enums.ConfigStringData;
 import net.nekomura.dcbot.Utils.Md5;
 import net.nekomura.dcbot.commands.Managers.CommandContext;
 import net.nekomura.dcbot.commands.Managers.ICommand;
-import net.nekomura.utils.jixiv.Enums.artwork.PixivImageSize;
+import net.nekomura.utils.jixiv.enums.artwork.PixivImageSize;
 import net.nekomura.utils.jixiv.Illustration;
 import net.nekomura.utils.jixiv.IllustrationInfo;
 
