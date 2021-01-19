@@ -26,5 +26,3 @@ Minecraft更新推播頻道
 * 搜尋動漫圖片(SuaceNAO)
 * 使用pixiv作品ID顯示作品
 * 搜尋pixiv插畫
-* pixiv畫師更新推播
-* Minecraft更新推播
