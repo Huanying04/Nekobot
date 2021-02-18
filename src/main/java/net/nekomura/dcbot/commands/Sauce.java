@@ -8,7 +8,7 @@ import net.nekomura.dcbot.Config;
 import net.nekomura.dcbot.Enums.ConfigStringData;
 import net.nekomura.dcbot.commands.Managers.CommandContext;
 import net.nekomura.dcbot.commands.Managers.ICommand;
-import net.nekomura.utils.jixiv.Illustration;
+import net.nekomura.utils.jixiv.artworks.Illustration;
 import org.json.JSONObject;
 
 import java.net.URL;
@@ -37,11 +37,10 @@ public class Sauce implements ICommand {
                         int index_id = json.getJSONArray("results").getJSONObject(test).getJSONObject("header").getInt("index_id");
                         if (index_id == 5) {
                             //pixiv
-                            Illustration i = new Illustration(Config.get(ConfigStringData.PIXIV_PHPSESSID), Config.get(ConfigStringData.USER_AGENT));
                             boolean exist;
 
                             try {
-                                i.get(json.getJSONArray("results").getJSONObject(test).getJSONObject("data").getInt("pixiv_id"));
+                                Illustration.getInfo(json.getJSONArray("results").getJSONObject(test).getJSONObject("data").getInt("pixiv_id"));
                                 exist = true;
                             }catch (Throwable e) {
                                 exist = false;

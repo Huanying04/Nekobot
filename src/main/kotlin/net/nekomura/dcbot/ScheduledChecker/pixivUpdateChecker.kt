@@ -1,20 +1,16 @@
 ﻿package net.nekomura.dcbot.ScheduledChecker
 
-import com.google.common.collect.Lists
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDA
 import net.nekomura.dcbot.Config
 import net.nekomura.dcbot.Enums.ConfigJsonArrayData
 import net.nekomura.dcbot.Enums.ConfigLongData
 import net.nekomura.dcbot.Enums.ConfigStringData
-import net.nekomura.dcbot.Utils.Md5.toMD5
 import net.nekomura.utils.jixiv.enums.artwork.PixivArtworkType
 import net.nekomura.utils.jixiv.enums.artwork.PixivImageSize
-import net.nekomura.utils.jixiv.Illustration
-import net.nekomura.utils.jixiv.Novel
 import net.nekomura.utils.jixiv.Pixiv
-import okhttp3.internal.userAgent
-import org.json.JSONArray
+import net.nekomura.utils.jixiv.artworks.Illustration
+import net.nekomura.utils.jixiv.artworks.Novel
 import org.json.JSONObject
 import java.io.File
 import java.util.*
@@ -31,8 +27,7 @@ fun pixivUpdateChecker(bot: JDA) {
         val file = File("./temp/pixiv/pixiv-user-${followID}.json")
         var content: String
 
-        val p = Pixiv(Config.get(ConfigStringData.PIXIV_PHPSESSID), Config.get(ConfigStringData.USER_AGENT))
-        val user = p.getUserInfo(followID)
+        val user = Pixiv.getUserInfo(followID)
 
         val latestIllustId =
                 if (user.getUserArtworks(PixivArtworkType.Illusts).isNotEmpty())
@@ -57,12 +52,11 @@ fun pixivUpdateChecker(bot: JDA) {
                 val eb = EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16))
 
                 if (latestIllustId > json.getInt("illustration")) {
-                    val i = Illustration(Config.get(ConfigStringData.PIXIV_PHPSESSID), Config.get(ConfigStringData.USER_AGENT))
-                    val info = i.get(latestIllustId)
+                    val info = Illustration.getInfo(latestIllustId)
 
                     val image = info.getImage(0, PixivImageSize.Regular)
 
-                    eb.setImage("attachment://${image.toMD5()}.${info.getImageFileFormat(0)}")
+                    eb.setImage("attachment://${info.id}.${info.getImageFileFormat(0)}")
                     eb.setTitle("pixiv畫師${info.authorName}更新啦！")
                     eb.addField("作者", "[${info.authorName}](https://www.pixiv.net/users/${info.authorID})", false)
                     eb.addField("ID", "[$latestIllustId](https://www.pixiv.net/artworks/$latestIllustId)", true)
@@ -72,19 +66,18 @@ fun pixivUpdateChecker(bot: JDA) {
                     eb.addField("標籤", Arrays.toString(info.tags), false)
 
                     if (!info.isNSFW)
-                        bot.getTextChannelById(Config.get(ConfigLongData.PIXIV_PUSH_NOTIFICATION_CHANNEL))!!.sendFile(image, "${image.toMD5()}.${info.getImageFileFormat(0)}").embed(eb.build()).queue()
+                        bot.getTextChannelById(Config.get(ConfigLongData.PIXIV_PUSH_NOTIFICATION_CHANNEL))!!.sendFile(image, "${info.id}.${info.getImageFileFormat(0)}").embed(eb.build()).queue()
                     else {
                         eb.setDescription("為了防止觸及Discord禁止兒童色情暴力等，不發送圖片")
                         bot.getTextChannelById(Config.get(ConfigLongData.PIXIV_R18_PUSH_NOTIFICATION_CHANNEL))!!.sendMessage(eb.build()).queue()
                     }
                 }
                 if (latestMangaId > json.getInt("manga")) {
-                    val i = Illustration(Config.get(ConfigStringData.PIXIV_PHPSESSID), Config.get(ConfigStringData.USER_AGENT))
-                    val info = i.get(latestMangaId)
+                    val info = Illustration.getInfo(latestMangaId)
 
                     val image = info.getImage(0, PixivImageSize.Regular)
 
-                    eb.setImage("attachment://${image.toMD5()}.${info.getImageFileFormat(0)}")
+                    eb.setImage("attachment://${info.id}.${info.getImageFileFormat(0)}")
                     eb.setTitle("pixiv畫師${info.authorName}更新啦！")
                     eb.addField("作者", "[${info.authorName}](https://www.pixiv.net/users/${info.authorID})", false)
                     eb.addField("ID", "[$latestMangaId](https://www.pixiv.net/artworks/$latestMangaId)", true)
@@ -94,19 +87,18 @@ fun pixivUpdateChecker(bot: JDA) {
                     eb.addField("標籤", Arrays.toString(info.tags), false)
 
                     if (!info.isNSFW)
-                        bot.getTextChannelById(Config.get(ConfigLongData.PIXIV_PUSH_NOTIFICATION_CHANNEL))!!.sendFile(image, "${image.toMD5()}.${info.getImageFileFormat(0)}").embed(eb.build()).queue()
+                        bot.getTextChannelById(Config.get(ConfigLongData.PIXIV_PUSH_NOTIFICATION_CHANNEL))!!.sendFile(image, "${info.id}.${info.getImageFileFormat(0)}").embed(eb.build()).queue()
                     else {
                         eb.setDescription("為了防止觸及Discord禁止兒童色情暴力等，不發送圖片")
                         bot.getTextChannelById(Config.get(ConfigLongData.PIXIV_R18_PUSH_NOTIFICATION_CHANNEL))!!.sendMessage(eb.build()).queue()
                     }
                 }
                 if (latestNovelId > json.getInt("novel")) {
-                    val n = Novel(Config.get(ConfigStringData.PIXIV_PHPSESSID), Config.get(ConfigStringData.USER_AGENT))
-                    val info = n.get(latestNovelId)
+                    val info = Novel.getInfo(latestNovelId)
 
                     val image = info.cover
 
-                    eb.setImage("attachment://${image.toMD5()}.jpg")
+                    eb.setImage("attachment://${info.id}.jpg")
                     eb.setTitle("pixiv畫師${info.authorName}更新啦！")
                     eb.addField("作者", "[${info.authorName}](https://www.pixiv.net/users/${info.authorID})", false)
                     eb.addField("ID", "[$latestNovelId](https://www.pixiv.net/novel/show.php?id=$latestNovelId)", true)
@@ -116,9 +108,9 @@ fun pixivUpdateChecker(bot: JDA) {
                     eb.addField("標籤", Arrays.toString(info.tags), false)
 
                     if (!info.isNSFW)
-                        bot.getTextChannelById(Config.get(ConfigLongData.PIXIV_PUSH_NOTIFICATION_CHANNEL))!!.sendFile(image, "${image.toMD5()}.jpg").embed(eb.build()).queue()
+                        bot.getTextChannelById(Config.get(ConfigLongData.PIXIV_PUSH_NOTIFICATION_CHANNEL))!!.sendFile(image, "${info.id}.jpg").embed(eb.build()).queue()
                     else {
-                        bot.getTextChannelById(Config.get(ConfigLongData.PIXIV_R18_PUSH_NOTIFICATION_CHANNEL))!!.sendFile(image, "${image.toMD5()}.jpg").embed(eb.build()).queue()
+                        bot.getTextChannelById(Config.get(ConfigLongData.PIXIV_R18_PUSH_NOTIFICATION_CHANNEL))!!.sendFile(image, "${info.id}.jpg").embed(eb.build()).queue()
                     }
                 }
                 val newFile = JSONObject()

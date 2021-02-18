@@ -4,12 +4,11 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.nekomura.dcbot.Config;
 import net.nekomura.dcbot.Enums.ConfigJsonArrayData;
 import net.nekomura.dcbot.Enums.ConfigStringData;
-import net.nekomura.dcbot.Utils.Md5;
 import net.nekomura.dcbot.commands.Managers.CommandContext;
 import net.nekomura.dcbot.commands.Managers.ICommand;
+import net.nekomura.utils.jixiv.artworks.Illustration;
 import net.nekomura.utils.jixiv.enums.artwork.PixivImageSize;
 import net.nekomura.utils.jixiv.enums.search.*;
-import net.nekomura.utils.jixiv.Illustration;
 import net.nekomura.utils.jixiv.IllustrationInfo;
 import net.nekomura.utils.jixiv.Pixiv;
 import net.nekomura.utils.jixiv.SearchResult;
@@ -33,7 +32,6 @@ public class Search implements ICommand {
         }
 
         PixivSearchMode mode = PixivSearchMode.SAFE;
-        Pixiv pixiv = new Pixiv(Config.get(ConfigStringData.PIXIV_PHPSESSID), Config.get(ConfigStringData.USER_AGENT));
 
         ArrayList<Object> keywords = Config.jsonArrayToArrayList(Config.get(ConfigJsonArrayData.RANDOM_PIXIV_SEARCH_KEYWORDS));
         String keyword = (String) keywords.get(ThreadLocalRandom.current().nextInt(0, keywords.size()));
@@ -51,7 +49,7 @@ public class Search implements ICommand {
         }
 
         PixivSearchOrder order = PixivSearchOrder.NEW_TO_OLD;
-        SearchResult tempResult = pixiv.search(order_keyword.toString(), 1, PixivSearchArtworkType.Illustrations, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.Illust);
+        SearchResult tempResult = Pixiv.search(order_keyword.toString(), 1, PixivSearchArtworkType.Illustrations, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.Illust);
 
         if (tempResult.getResultCount() == 0) {
             EmbedBuilder eb = new EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16));
@@ -62,13 +60,12 @@ public class Search implements ICommand {
 
         int lastPage = tempResult.getLastPageIndex();
         int page = ThreadLocalRandom.current().nextInt(1, lastPage + 1);
-        SearchResult result = pixiv.search(order_keyword.toString(), page, PixivSearchArtworkType.Illustrations, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.Illust);
+        SearchResult result = Pixiv.search(order_keyword.toString(), page, PixivSearchArtworkType.Illustrations, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.Illust);
 
         int max = result.getPageResultCount();
         int artworkID = result.getIds()[ThreadLocalRandom.current().nextInt(0, max)];
 
-        Illustration i = new Illustration(Config.get(ConfigStringData.PIXIV_PHPSESSID), Config.get(ConfigStringData.USER_AGENT));
-        IllustrationInfo info = i.get(artworkID);
+        IllustrationInfo info = Illustration.getInfo(artworkID);
 
         int artworkPage = ThreadLocalRandom.current().nextInt(0, info.getPageCount());
         byte[] image = info.getImage(artworkPage, PixivImageSize.Original);
@@ -80,8 +77,8 @@ public class Search implements ICommand {
         EmbedBuilder eb = new EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16));
         eb.setTitle("隨機搜尋pixiv圖片");
         eb.addField("ID", "[" + artworkID + "](https://www.pixiv.net/artworks/" + artworkID + ")", true);
-        eb.setImage("attachment://" + Md5.INSTANCE.toMD5(image) + "." + type);
-        ctx.event.getChannel().sendFile(image, Md5.INSTANCE.toMD5(image) + "." + type).embed(eb.build()).queue();
+        eb.setImage("attachment://" + info.getId() + "." + type);
+        ctx.event.getChannel().sendFile(image, info.getId() + "." + type).embed(eb.build()).queue();
     }
 
     @Override

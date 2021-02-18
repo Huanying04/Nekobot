@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.JDABuilder
 import net.nekomura.dcbot.Enums.*
 import net.nekomura.dcbot.ScheduledChecker.minecraftUpdateChecker
 import net.nekomura.dcbot.ScheduledChecker.pixivUpdateChecker
+import net.nekomura.utils.jixiv.Jixiv
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -46,6 +47,9 @@ fun main(args: Array<String>) {
             .addEventListeners(CommandListener())
             .addEventListeners(Listener())
             .build()
+
+    Jixiv.loginByCookie(Config.get(ConfigStringData.PIXIV_PHPSESSID))
+    Jixiv.setUserAgent(Config.get(ConfigStringData.USER_AGENT))
 
     val scheduledChecker: ScheduledExecutorService = Executors.newScheduledThreadPool(5)
     scheduledChecker.scheduleWithFixedDelay({
