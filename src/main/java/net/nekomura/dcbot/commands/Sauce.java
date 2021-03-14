@@ -22,7 +22,8 @@ public class Sauce implements ICommand {
         for (Message.Attachment file: files) {
             if (file.isImage()) {
                 String url = file.getUrl();
-                JSONObject json = new JSONObject(TextStreamsKt.readText(new URLReader(new URL("https://saucenao.com/search.php?url=" + url + "&output_type=2"))));
+
+                JSONObject json = new JSONObject(TextStreamsKt.readText(new URLReader(new URL("https://saucenao.com/search.php?url=" + url + "&output_type=2&api_key=" + Config.get(ConfigStringData.SAUCENAO_KEY)))));
 
                 String warning = "";
                 String result = "";

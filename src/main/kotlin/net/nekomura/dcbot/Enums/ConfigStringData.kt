@@ -24,5 +24,10 @@ enum class ConfigStringData {
     /**
      * User Agent
      */
-    USER_AGENT
+    USER_AGENT,
+
+    /**
+     * SuaceNao Key
+     */
+    SAUCENAO_KEY
 }
