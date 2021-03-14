@@ -21,8 +21,17 @@ pixiv用戶更新推播頻道(R18)
 Minecraft更新推播頻道
 
 然後將打包好的jar以cmd開啟，或者直接在編譯器裡執行。
+
 # 功能
 * 隨機pixiv圖片
 * 搜尋動漫圖片(SuaceNAO)
 * 使用pixiv作品ID顯示作品
 * 搜尋pixiv插畫
+
+# 預覽
+## 隨機pixiv圖片
+![a](https://github.com/Huanying04/Nekobot/blob/master/images/RandomAnimeIllustration.PNG)
+## 以圖搜圖(動漫圖片)
+![sauce](https://github.com/Huanying04/Nekobot/blob/master/images/Sauce.PNG)
+## 搜尋pixiv插畫
+![search](https://github.com/Huanying04/Nekobot/blob/master/images/Search.PNG)
