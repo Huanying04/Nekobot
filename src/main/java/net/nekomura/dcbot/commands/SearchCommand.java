@@ -2,10 +2,10 @@ package net.nekomura.dcbot.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.nekomura.dcbot.Config;
-import net.nekomura.dcbot.Enums.ConfigJsonArrayData;
-import net.nekomura.dcbot.Enums.ConfigStringData;
-import net.nekomura.dcbot.commands.Managers.CommandContext;
-import net.nekomura.dcbot.commands.Managers.ICommand;
+import net.nekomura.dcbot.enums.ConfigJsonArrayData;
+import net.nekomura.dcbot.enums.ConfigStringData;
+import net.nekomura.dcbot.commands.managers.CommandContext;
+import net.nekomura.dcbot.commands.managers.ICommand;
 import net.nekomura.utils.jixiv.artworks.Illustration;
 import net.nekomura.utils.jixiv.enums.artwork.PixivImageSize;
 import net.nekomura.utils.jixiv.enums.search.*;
@@ -16,7 +16,7 @@ import net.nekomura.utils.jixiv.SearchResult;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Search implements ICommand {
+public class SearchCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) throws Exception {
         if (ctx.args.size() == 0) {

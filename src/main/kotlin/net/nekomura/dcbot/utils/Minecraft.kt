@@ -1,4 +1,4 @@
-﻿package net.nekomura.dcbot.Utils
+﻿package net.nekomura.dcbot.utils
 
 import org.json.JSONObject
 import java.net.URL

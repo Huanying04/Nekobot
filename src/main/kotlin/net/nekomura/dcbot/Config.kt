@@ -1,6 +1,6 @@
 package net.nekomura.dcbot
 
-import net.nekomura.dcbot.Enums.*
+import net.nekomura.dcbot.enums.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File

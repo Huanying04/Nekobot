@@ -5,9 +5,9 @@ import kotlin.io.TextStreamsKt;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.nekomura.dcbot.Config;
-import net.nekomura.dcbot.Enums.ConfigStringData;
-import net.nekomura.dcbot.commands.Managers.CommandContext;
-import net.nekomura.dcbot.commands.Managers.ICommand;
+import net.nekomura.dcbot.enums.ConfigStringData;
+import net.nekomura.dcbot.commands.managers.CommandContext;
+import net.nekomura.dcbot.commands.managers.ICommand;
 import net.nekomura.utils.jixiv.artworks.Illustration;
 import org.json.JSONObject;
 
@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-public class Sauce implements ICommand {
+public class SauceCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) throws Exception {
         List<Message.Attachment> files = ctx.event.getMessage().getAttachments();

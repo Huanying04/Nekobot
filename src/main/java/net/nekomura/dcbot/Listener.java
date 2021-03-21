@@ -1,12 +1,11 @@
 package net.nekomura.dcbot;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.nekomura.dcbot.Enums.ConfigStringData;
-import net.nekomura.dcbot.commands.Managers.CommandManager;
+import net.nekomura.dcbot.enums.ConfigStringData;
+import net.nekomura.dcbot.commands.managers.CommandManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

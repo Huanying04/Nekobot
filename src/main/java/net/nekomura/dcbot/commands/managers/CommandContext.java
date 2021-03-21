@@ -1,4 +1,4 @@
-package net.nekomura.dcbot.commands.Managers;
+package net.nekomura.dcbot.commands.managers;
 
 import me.duncte123.botcommons.commands.ICommandContext;
 import net.dv8tion.jda.api.entities.Guild;

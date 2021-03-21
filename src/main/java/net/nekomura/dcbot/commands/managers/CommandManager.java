@@ -1,8 +1,8 @@
-package net.nekomura.dcbot.commands.Managers;
+package net.nekomura.dcbot.commands.managers;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.nekomura.dcbot.Config;
-import net.nekomura.dcbot.Enums.ConfigStringData;
+import net.nekomura.dcbot.enums.ConfigStringData;
 import net.nekomura.dcbot.commands.*;
 
 import javax.annotation.Nullable;
@@ -14,14 +14,17 @@ import java.util.regex.Pattern;
 
 public class CommandManager {
     public CommandManager() {
-        addCommand(new RandomAnimeIllustration());
-        addCommand(new PixivIllustration());
-        addCommand(new Sauce());
-        addCommand(new RandomAnimeIllustrationNSFWAble());
-        addCommand(new RandomAnimeIllustrationR18());
-        addCommand(new Search());
-        addCommand(new SearchNSFWAble());
-        addCommand(new SearchR18());
+        addCommand(new RandomAnimeIllustrationCommand());
+        addCommand(new PixivIllustrationCommand());
+        addCommand(new SauceCommand());
+        addCommand(new RandomAnimeIllustrationNSFWAbleCommand());
+        addCommand(new RandomAnimeIllustrationR18Command());
+        addCommand(new SearchCommand());
+        addCommand(new SearchNSFWAbleCommand());
+        addCommand(new SearchR18Command());
+        addCommand(new ShutdownCommand());
+        addCommand(new MeowCommand());
+        addCommand(new SettingCommand());
     }
 
     private final List<ICommand> commands = new ArrayList<>();

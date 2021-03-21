@@ -1,11 +1,11 @@
-﻿package net.nekomura.dcbot.ScheduledChecker
+﻿package net.nekomura.dcbot.scheduledChecker
 
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDA
 import net.nekomura.dcbot.Config
-import net.nekomura.dcbot.Enums.ConfigLongData
-import net.nekomura.dcbot.Enums.ConfigStringData
-import net.nekomura.dcbot.Utils.Minecraft
+import net.nekomura.dcbot.enums.ConfigLongData
+import net.nekomura.dcbot.enums.ConfigStringData
+import net.nekomura.dcbot.utils.Minecraft
 import org.json.JSONObject
 import java.io.File
 
