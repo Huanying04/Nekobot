@@ -9,16 +9,8 @@
 pixiv的PHPSESSID，在cookie裡，自己去找。因為做不出登入所以就用PHPSESSID代替啦~(喂
 
   **注意：**PHPSESSID會**因為登出而失效**，如果登出了就拿新的代替。
-* **PIXIV_UPDATE_CHECKER**  
-是否開啟pixiv用戶更新推播
-* **MINECRAFT_UPDATE_CHECKER**  
-是否開啟Minecraft更新推播
-* **PIXIV_PUSH_NOTIFICATION_CHANNEL**  
-pixiv用戶更新推播頻道
-* **PIXIV_R18_PUSH_NOTIFICATION_CHANNEL**  
-pixiv用戶更新推播頻道(R18)
-* **MINECRAFT_PUSH_NOTIFICATION_CHANNEL**  
-Minecraft更新推播頻道
+* **SAUCENAO_KEY**  
+SauceNAO的用戶API KEY，用於搜尋圖片
 
 然後將打包好的jar以cmd開啟，或者直接在編譯器裡執行。
 
