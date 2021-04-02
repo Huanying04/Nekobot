@@ -15,6 +15,8 @@ public class ShutdownCommand implements ICommand {
             eb.setDescription("已關閉");
             ctx.event.getChannel().sendMessage(eb.build()).queue();
 
+            Thread.sleep(1000);
+
             ctx.event.getJDA().shutdown();
             System.exit(0);
         }else {

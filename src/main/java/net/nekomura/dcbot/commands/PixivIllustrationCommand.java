@@ -23,7 +23,7 @@ public class PixivIllustrationCommand implements ICommand {
             eb.setDescription("該作品為R18作品，請在限制級頻道裡執行此指令或使用其他作品ID");
             ctx.event.getChannel().sendMessage(eb.build()).queue();
         }else {
-            int page = Integer.parseInt(ctx.args.get(1));
+            int page;
             boolean announcement = false;
 
             if (ctx.args.size() == 1) {
@@ -31,6 +31,8 @@ public class PixivIllustrationCommand implements ICommand {
             }else if (Integer.parseInt(ctx.args.get(1)) >= info.getPageCount()) {
                 page = 0;
                 announcement = true;
+            }else {
+                page = Integer.parseInt(ctx.args.get(1));
             }
 
             byte[] image = info.getImage(page, PixivImageSize.Original);
