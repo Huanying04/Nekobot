@@ -25,10 +25,14 @@ public class PixivIllustrationCommand implements ICommand {
         }else {
             int page = Integer.parseInt(ctx.args.get(1));
             boolean announcement = false;
-            if (Integer.parseInt(ctx.args.get(1)) >= info.getPageCount()) {
+
+            if (ctx.args.size() == 1) {
+                page = 0;
+            }else if (Integer.parseInt(ctx.args.get(1)) >= info.getPageCount()) {
                 page = 0;
                 announcement = true;
             }
+
             byte[] image = info.getImage(page, PixivImageSize.Original);
 
             eb.setImage("attachment://" + info.getId() + "." + info.getImageFileFormat(0));
