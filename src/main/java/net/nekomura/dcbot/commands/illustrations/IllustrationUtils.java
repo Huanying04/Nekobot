@@ -55,12 +55,13 @@ public class IllustrationUtils {
             return;
         }
 
-        StringBuilder orderKeywords = new StringBuilder();
+        StringBuilder orderKeywords;
         SearchResult tempResult;
         PixivSearchOrder order = PixivSearchOrder.NEW_TO_OLD;
         int testCount = 0;
 
-        do {  //隨機加入XXXusers入り關鍵字"代替"熱門搜尋功能，最多嘗試2次
+        do {  //隨機加入XXXusers入り關鍵字"代替"熱門搜尋功能，最多嘗試3次
+            orderKeywords = new StringBuilder();
             for (String s: ctx.args) {
                 orderKeywords.append(s).append(" ");
             }
@@ -83,31 +84,10 @@ public class IllustrationUtils {
             tempResult = Pixiv.search(orderKeywords.toString(), 1, PixivSearchArtworkType.Illustrations, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.Illust);
             testCount++;
             ctx.getChannel().sendTyping().queue();
-        }while (tempResult.getResultCount() == 0 && testCount <= 2);
-
-        if (tempResult.getResultCount() == 0) {  //如果最後還是沒有則使用100users入り
-            for (String s: ctx.args) {
-                orderKeywords.append(s).append(" ");
-            }
-
-            ArrayList<Object> keywords = Config.jsonArrayToArrayList(Config.get(ConfigJsonArrayData.RANDOM_PIXIV_SEARCH_KEYWORDS));
-            boolean contain = false;
-
-            for (Object o : keywords) {
-                if (ctx.args.contains(o)) {
-                    contain = true;
-                    break;
-                }
-            }
-
-            if (!contain) {
-                orderKeywords.append("100users入り").append(" ");
-            }
-
-            tempResult = Pixiv.search(orderKeywords.toString(), 1, PixivSearchArtworkType.Illustrations, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.Illust);
-        }
+        }while (tempResult.getResultCount() == 0 && testCount <= 3);
 
         if (tempResult.getResultCount() == 0) {  //如果還是沒有，乾脆不管了，那可能是關鍵字不夠熱門等
+            orderKeywords = new StringBuilder();
             for (String s: ctx.args) {
                 orderKeywords.append(s).append(" ");
             }
@@ -141,6 +121,7 @@ public class IllustrationUtils {
         EmbedBuilder eb = new EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16));
         eb.setTitle("隨機搜尋pixiv圖片");
         eb.addField("ID", "[" + artworkID + "](https://www.pixiv.net/artworks/" + artworkID + ")", true);
+        eb.addField("頁碼", String.valueOf(artworkPage), true);
         eb.setImage("attachment://" + info.getId() + "." + type);
         ctx.event.getChannel().sendFile(image, info.getId() + "." + type).embed(eb.build()).queue();
     }
