@@ -23,7 +23,7 @@ public class PixivIllustrationCommand implements ICommand {
             eb.setDescription("該作品為R18作品，請在限制級頻道裡執行此指令或使用其他作品ID");
             ctx.event.getChannel().sendMessage(eb.build()).queue();
         }else {
-            byte[] image = info.getImage(0, PixivImageSize.Original);
+            byte[] image = info.getImage(Integer.parseInt(ctx.args.get(1)), PixivImageSize.Original);
 
             eb.setImage("attachment://" + info.getId() + "." + info.getImageFileFormat(0));
             eb.addField("標題", info.getTitle(), false);
@@ -31,6 +31,7 @@ public class PixivIllustrationCommand implements ICommand {
             eb.addField("標籤", Arrays.toString(info.getTags()), false);
             eb.addField("作者", "[" + info.getAuthorName() + "](https://www.pixiv.net/users/" + info.getAuthorID() + ")", false);
             eb.addField("ID", "[" + ctx.args.get(0) + "](https://www.pixiv.net/artworks/" + ctx.args.get(0) + ")", true);
+            eb.addField("頁碼", ctx.args.get(1), true);
             eb.addField("頁數", String.valueOf(info.getPageCount()), true);
             ctx.event.getChannel().sendFile(image, info.getId() + "." + info.getImageFileFormat(0)).embed(eb.build()).queue();
         }

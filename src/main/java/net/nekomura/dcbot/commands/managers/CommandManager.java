@@ -13,27 +13,13 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class CommandManager {
-    public CommandManager() {
-        addCommand(new RandomAnimeIllustrationCommand());
-        addCommand(new PixivIllustrationCommand());
-        addCommand(new SauceCommand());
-        addCommand(new RandomAnimeIllustrationNSFWAbleCommand());
-        addCommand(new RandomAnimeIllustrationR18Command());
-        addCommand(new SearchCommand());
-        addCommand(new SearchNSFWAbleCommand());
-        addCommand(new SearchR18Command());
-        addCommand(new ShutdownCommand());
-        addCommand(new MeowCommand());
-        addCommand(new SettingCommand());
-    }
-
     private final List<ICommand> commands = new ArrayList<>();
 
-    private void addCommand(ICommand cmd) {
+    public void register(ICommand cmd) {
         boolean nameFound = this.commands.stream().anyMatch((it) -> it.getName().equalsIgnoreCase(cmd.getName()));
 
         if (nameFound) {
-            throw new IllegalArgumentException("Command duplicated.");
+            throw new IllegalArgumentException("註冊了重複的指令");
         }
 
         commands.add(cmd);
@@ -55,7 +41,7 @@ public class CommandManager {
     public void handle(GuildMessageReceivedEvent event) throws Exception {
         try {
             String[] split = event.getMessage().getContentRaw()
-                    .replaceFirst("(?i)" + Pattern.quote(Objects.requireNonNull(Config.get(ConfigStringData.PREFIX))), "")
+                    .replaceFirst("(?i)" + Pattern.quote(Objects.requireNonNull(Config.get(ConfigStringData.PREFIX))), "")  //大小寫不敏感?
                     .split("\\s+");
             String invoke = split[0].toLowerCase();
             ICommand cmd = this.getCommand(invoke);

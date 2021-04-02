@@ -1,7 +1,5 @@
 {
-    "PIXIV_PUSH_NOTIFICATION_CHANNEL": 0,
     "PIXIV_PHPSESSID": "",
-    "CHECK_PIXIV_UPDATE_DELAY": 10,
     "first_use": true,
     "RANDOM_PIXIV_SEARCH_KEYWORDS": [
         "100users入り",
@@ -41,16 +39,9 @@
         "30000users入り",
         "50000users入り"
     ],
-    "PIXIV_R18_PUSH_NOTIFICATION_CHANNEL": 0,
     "OWNER": 0,
-    "SCHEDULED_CHECKER_DELAY": 10,
     "PREFIX": "s!",
     "EMBED_MESSAGE_COLOR": "de452a",
-    "MINECRAFT_UPDATE_CHECKER": false,
-    "FOLLOW_PIXIV": [],
-    "MINECRAFT_PUSH_NOTIFICATION_CHANNEL": 0,
-    "CHECK_MINECRAFT_UPDATE_DELAY": 10,
-    "PIXIV_UPDATE_CHECKER": false,
     "TOKEN": "",
     "USER_AGENT": "",
     "SAUCENAO_KEY": ""
