@@ -34,7 +34,7 @@ public class PixivIllustrationCommand implements ICommand {
                 page = Integer.parseInt(ctx.args.get(1));
             }
 
-            byte[] image = info.getImage(page, PixivImageSize.Original);
+            byte[] image = info.getImage(page, PixivImageSize.ORIGINAL);
 
             eb.setImage("attachment://" + info.getId() + "." + info.getImageFileFormat(0));
             eb.addField("標題", info.getTitle(), false);

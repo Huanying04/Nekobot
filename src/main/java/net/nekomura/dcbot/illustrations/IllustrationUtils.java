@@ -21,10 +21,10 @@ public class IllustrationUtils {
         ArrayList<Object> keywords = Config.jsonArrayToArrayList(Config.get(ConfigJsonArrayData.RANDOM_PIXIV_SEARCH_KEYWORDS));
         String keyword = (String) keywords.get(ThreadLocalRandom.current().nextInt(0, keywords.size()));
         PixivSearchOrder order = PixivSearchOrder.NEW_TO_OLD;
-        SearchResult tempResult = Pixiv.search(keyword, 1, PixivSearchArtworkType.Illustrations, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.Illust);
+        SearchResult tempResult = Pixiv.search(keyword, 1, PixivSearchArtworkType.ILLUSTRATIONS, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.ILLUST);
         int lastPageOfSearching = tempResult.getLastPageIndex();
         int pageForSearching = ThreadLocalRandom.current().nextInt(1, lastPageOfSearching + 1);
-        SearchResult result = Pixiv.search(keyword, pageForSearching, PixivSearchArtworkType.Illustrations, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.Illust);
+        SearchResult result = Pixiv.search(keyword, pageForSearching, PixivSearchArtworkType.ILLUSTRATIONS, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.ILLUST);
 
         int max = result.getPageResultCount();
         int page = ThreadLocalRandom.current().nextInt(0, max);
@@ -33,9 +33,9 @@ public class IllustrationUtils {
         IllustrationInfo info = Illustration.getInfo(artworkID);
 
         int artworkPage = ThreadLocalRandom.current().nextInt(0, info.getPageCount());
-        byte[] image = info.getImage(artworkPage, PixivImageSize.Original);
+        byte[] image = info.getImage(artworkPage, PixivImageSize.ORIGINAL);
         if (image.length > 8388608) {
-            image = info.getImage(artworkPage, PixivImageSize.Regular);
+            image = info.getImage(artworkPage, PixivImageSize.REGULAR);
         }
         String type = info.getImageFileFormat(artworkPage);
 
@@ -81,7 +81,7 @@ public class IllustrationUtils {
                 orderKeywords.append(keyword).append(" ");
             }
 
-            tempResult = Pixiv.search(orderKeywords.toString(), 1, PixivSearchArtworkType.Illustrations, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.Illust);
+            tempResult = Pixiv.search(orderKeywords.toString(), 1, PixivSearchArtworkType.ILLUSTRATIONS, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.ILLUST);
             testCount++;
             ctx.getChannel().sendTyping().queue();
         }while (tempResult.getResultCount() == 0 && testCount <= 3);
@@ -92,7 +92,7 @@ public class IllustrationUtils {
                 orderKeywords.append(s).append(" ");
             }
 
-            tempResult = Pixiv.search(orderKeywords.toString(), 1, PixivSearchArtworkType.Illustrations, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.Illust);
+            tempResult = Pixiv.search(orderKeywords.toString(), 1, PixivSearchArtworkType.ILLUSTRATIONS, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.ILLUST);
         }
 
         if (tempResult.getResultCount() == 0) {
@@ -104,7 +104,7 @@ public class IllustrationUtils {
 
         int lastPage = tempResult.getLastPageIndex();
         int page = ThreadLocalRandom.current().nextInt(1, lastPage + 1);
-        SearchResult result = Pixiv.search(orderKeywords.toString(), page, PixivSearchArtworkType.Illustrations, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.Illust);
+        SearchResult result = Pixiv.search(orderKeywords.toString(), page, PixivSearchArtworkType.ILLUSTRATIONS, order, mode, PixivSearchSMode.S_TAG, PixivSearchType.ILLUST);
 
         int max = result.getPageResultCount();
         int artworkID = result.getIds()[ThreadLocalRandom.current().nextInt(0, max)];
@@ -112,9 +112,9 @@ public class IllustrationUtils {
         IllustrationInfo info = Illustration.getInfo(artworkID);
 
         int artworkPage = ThreadLocalRandom.current().nextInt(0, info.getPageCount());
-        byte[] image = info.getImage(artworkPage, PixivImageSize.Original);
+        byte[] image = info.getImage(artworkPage, PixivImageSize.ORIGINAL);
         if (image.length > 8388608) {
-            image = info.getImage(artworkPage, PixivImageSize.Regular);
+            image = info.getImage(artworkPage, PixivImageSize.REGULAR);
         }
         String type = info.getImageFileFormat(artworkPage);
 
