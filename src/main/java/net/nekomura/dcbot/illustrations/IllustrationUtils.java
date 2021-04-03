@@ -1,4 +1,4 @@
-package net.nekomura.dcbot.commands.illustrations;
+package net.nekomura.dcbot.illustrations;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.nekomura.dcbot.Config;

@@ -1,6 +1,6 @@
 package net.nekomura.dcbot.commands;
 
-import net.nekomura.dcbot.commands.illustrations.IllustrationUtils;
+import net.nekomura.dcbot.illustrations.IllustrationUtils;
 import net.nekomura.dcbot.commands.managers.CommandContext;
 import net.nekomura.dcbot.commands.managers.ICommand;
 import net.nekomura.utils.jixiv.enums.search.*;

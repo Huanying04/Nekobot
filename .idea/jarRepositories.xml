@@ -26,5 +26,15 @@
       <option name="name" value="Google" />
       <option name="url" value="https://dl.google.com/dl/android/maven2/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="m2-dv8tion" />
+      <option name="name" value="m2-dv8tion" />
+      <option name="url" value="https://m2.dv8tion.net/releases" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="duncte123-jfrog" />
+      <option name="name" value="duncte123-jfrog" />
+      <option name="url" value="https://duncte123.jfrog.io/artifactory/maven" />
+    </remote-repository>
   </component>
 </project>

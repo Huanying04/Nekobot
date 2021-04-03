@@ -3,7 +3,6 @@ package net.nekomura.dcbot.commands.managers;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.nekomura.dcbot.Config;
 import net.nekomura.dcbot.enums.ConfigStringData;
-import net.nekomura.dcbot.commands.*;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

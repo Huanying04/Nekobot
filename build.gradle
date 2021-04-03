@@ -5,25 +5,33 @@ plugins {
 }
 
 group 'net.nekomura.dcbot'
-version '1.2'
+version '1.3'
 
 repositories {
     jcenter()
     google()
     mavenCentral()
+    maven {
+        name 'm2-dv8tion'
+        url 'https://m2.dv8tion.net/releases'
+    }
+    maven {
+        name 'duncte123-jfrog'
+        url 'https://duncte123.jfrog.io/artifactory/maven'
+    }
 }
 
 dependencies {
-    implementation 'net.dv8tion:JDA:4.2.0_225'
-    compile group: 'com.jagrosh', name: 'jda-utilities', version: '3.0.1'
-    compile group: 'me.duncte123', name: 'botCommons', version: '1.0.45'
+    implementation 'net.dv8tion:JDA:4.2.1_253'
+    compile group: 'com.jagrosh', name: 'jda-utilities', version: '3.0.5'
+    compile group: 'me.duncte123', name: 'botCommons', version: '2.1.3'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 
     implementation 'com.github.huanying04.utils:jixiv:0.1.0.4'
 
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
-    compile group: 'org.json', name: 'json', version: '20090211'
-    compile group: 'org.jsoup', name: 'jsoup', version: '1.7.2'
+    compile group: 'org.json', name: 'json', version: '20210307'
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.13.1'
     compile group: 'org.apache.commons', name: 'commons-text', version: '1.9'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
@@ -39,7 +47,7 @@ compileTestKotlin {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'net.nekomura.dcbot.BotKt'
+        attributes 'Main-Class': 'net.nekomura.dcbot.Main'
     }
 }
 

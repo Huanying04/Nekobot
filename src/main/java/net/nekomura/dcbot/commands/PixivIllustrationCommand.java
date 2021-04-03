@@ -10,7 +10,6 @@ import net.nekomura.utils.jixiv.enums.artwork.PixivImageSize;
 import net.nekomura.utils.jixiv.IllustrationInfo;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class PixivIllustrationCommand implements ICommand {
     @Override
@@ -55,10 +54,5 @@ public class PixivIllustrationCommand implements ICommand {
     @Override
     public String getName() {
         return "pixiv";
-    }
-
-    @Override
-    public List<String> getAliases() {
-        return Arrays.asList();
     }
 }

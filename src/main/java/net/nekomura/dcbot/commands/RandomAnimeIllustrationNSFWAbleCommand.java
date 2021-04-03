@@ -2,7 +2,7 @@ package net.nekomura.dcbot.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.nekomura.dcbot.Config;
-import net.nekomura.dcbot.commands.illustrations.IllustrationUtils;
+import net.nekomura.dcbot.illustrations.IllustrationUtils;
 import net.nekomura.dcbot.enums.ConfigStringData;
 import net.nekomura.dcbot.commands.managers.CommandContext;
 import net.nekomura.dcbot.commands.managers.ICommand;

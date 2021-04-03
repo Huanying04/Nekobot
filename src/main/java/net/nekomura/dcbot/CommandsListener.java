@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.nekomura.dcbot.commands.*;
 import net.nekomura.dcbot.enums.ConfigStringData;
 import net.nekomura.dcbot.commands.managers.CommandManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
