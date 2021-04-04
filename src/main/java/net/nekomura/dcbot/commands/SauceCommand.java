@@ -6,12 +6,14 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.nekomura.dcbot.Config;
+import net.nekomura.dcbot.UrlReader;
 import net.nekomura.dcbot.enums.ConfigStringData;
 import net.nekomura.dcbot.commands.managers.CommandContext;
 import net.nekomura.dcbot.commands.managers.ICommand;
 import net.nekomura.utils.jixiv.artworks.Illustration;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
@@ -44,7 +46,7 @@ public class SauceCommand implements ICommand {
         return Arrays.asList(aliases);
     }
 
-    private static void searchByAttachmentsAndEmbeds(List<Message.Attachment> files, List<MessageEmbed> embeds, CommandContext ctx) throws MalformedURLException {
+    private static void searchByAttachmentsAndEmbeds(List<Message.Attachment> files, List<MessageEmbed> embeds, CommandContext ctx) throws IOException {
         if (files.isEmpty() && embeds.isEmpty()) {
             EmbedBuilder eb = new EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16));
             eb.setDescription("訊息必須附帶圖片才能搜圖");
@@ -82,8 +84,8 @@ public class SauceCommand implements ICommand {
         }
     }
 
-    private static void search(String url, CommandContext ctx) throws MalformedURLException {
-        JSONObject json = new JSONObject(TextStreamsKt.readText(new URLReader(new URL("https://saucenao.com/search.php?url=" + url + "&output_type=2&api_key=" + Config.get(ConfigStringData.SAUCENAO_KEY)))));
+    private static void search(String url, CommandContext ctx) throws IOException {
+        JSONObject json = new JSONObject(UrlReader.read("https://saucenao.com/search.php?url=" + url + "&output_type=2&api_key=" + Config.get(ConfigStringData.SAUCENAO_KEY)));
 
         String warning = "";
         String result = "";
