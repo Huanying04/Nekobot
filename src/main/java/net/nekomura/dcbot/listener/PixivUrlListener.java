@@ -23,7 +23,7 @@ public class PixivUrlListener extends ListenerAdapter {
 
         String raw = event.getMessage().getContentRaw();
 
-        if (raw.matches("http[s]?://www\\.pixiv\\.net/artworks/[0-9]+")) {
+        if (raw.matches("http[s]?://(www\\.)?pixiv\\.net/artworks/[0-9]+")) {
             event.getChannel().sendTyping().queue();
             try {
                 String[] args = raw.split("/");
