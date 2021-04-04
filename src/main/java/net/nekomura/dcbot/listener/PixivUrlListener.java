@@ -23,7 +23,7 @@ public class PixivUrlListener extends ListenerAdapter {
 
         String raw = event.getMessage().getContentRaw();
 
-        if (raw.contains("pixiv.net/artworks/")) {
+        if (raw.matches("http[s]?://www\\.pixiv\\.net/artworks/[0-9]+")) {
             event.getChannel().sendTyping().queue();
             try {
                 String[] args = raw.split("/");
@@ -48,7 +48,7 @@ public class PixivUrlListener extends ListenerAdapter {
                 eb.addField("頁數", String.valueOf(info.getPageCount()), true);
 
                 event.getChannel().sendFile(image, info.getId() + "." + info.getImageFileFormat(0)).embed(eb.build()).queue();
-            } catch (Exception e) {
+            }catch (Throwable e) {
                 e.printStackTrace();
             }
         }

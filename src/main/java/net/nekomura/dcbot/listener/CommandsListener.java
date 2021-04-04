@@ -46,7 +46,7 @@ public class CommandsListener extends ListenerAdapter {
         if (raw.startsWith(prefix)) {
             try {
                 manager.handle(event);
-            } catch (Exception e) {
+            }catch (Exception e) {
                 e.printStackTrace();
             }
         }
