@@ -1,9 +1,10 @@
-package net.nekomura.dcbot;
+package net.nekomura.dcbot.listener;
 
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.nekomura.dcbot.Config;
 import net.nekomura.dcbot.commands.*;
 import net.nekomura.dcbot.enums.ConfigStringData;
 import net.nekomura.dcbot.commands.managers.CommandManager;

@@ -2,6 +2,8 @@ package net.nekomura.dcbot;
 
 import net.dv8tion.jda.api.JDABuilder;
 import net.nekomura.dcbot.enums.ConfigStringData;
+import net.nekomura.dcbot.listener.CommandsListener;
+import net.nekomura.dcbot.listener.PixivUrlListener;
 import net.nekomura.utils.jixiv.Jixiv;
 
 import javax.security.auth.login.LoginException;
@@ -13,7 +15,7 @@ public class Main {
      */
     public static void main(String[] args) throws LoginException {
         JDABuilder.createDefault(Config.get(ConfigStringData.TOKEN))
-                .addEventListeners(new CommandsListener())
+                .addEventListeners(new CommandsListener(), new PixivUrlListener())
                 .build();
 
         Jixiv.loginByCookie(Config.get(ConfigStringData.PIXIV_PHPSESSID));
