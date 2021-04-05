@@ -24,7 +24,6 @@ public class PixivUrlListener extends ListenerAdapter {
         String raw = event.getMessage().getContentRaw();
 
         if (raw.matches("http[s]?://(www\\.)?pixiv\\.net/artworks/[0-9]+")) {
-            event.getChannel().sendTyping().queue();
             try {
                 String[] args = raw.split("/");
 
@@ -32,10 +31,10 @@ public class PixivUrlListener extends ListenerAdapter {
                 EmbedBuilder eb = new EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16));
 
                 if (info.isNSFW() && !event.getChannel().isNSFW()) {
-                    event.getChannel().sendTyping().complete();
                     return;
                 }
 
+                event.getChannel().sendTyping().queue();
                 byte[] image = info.getImage(0, PixivImageSize.ORIGINAL);
 
                 eb.setImage("attachment://" + info.getId() + "." + info.getImageFileFormat(0));
