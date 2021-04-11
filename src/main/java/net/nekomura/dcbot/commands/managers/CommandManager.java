@@ -55,6 +55,7 @@ public class CommandManager {
             }
         }catch (Throwable e) {
             event.getChannel().sendMessage("錯誤發生！\r\n```" + e.toString() + "```\r\n請聯繫管理員或稍後重試。").queue();
+            e.printStackTrace();
         }
     }
 }

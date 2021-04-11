@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CommandsListener extends ListenerAdapter {
-    private static Logger LOGGER = LoggerFactory.getLogger(CommandsListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommandsListener.class);
     private final CommandManager manager = new CommandManager();
 
     @Override
@@ -29,7 +29,7 @@ public class CommandsListener extends ListenerAdapter {
         manager.register(new ShutdownCommand());
         manager.register(new MeowCommand());
 
-        LOGGER.info("{} is ready", event.getJDA().getSelfUser().getAsTag());
+        LOGGER.info("{} 準備完畢。", event.getJDA().getSelfUser().getAsTag());
     }
 
     @Override
