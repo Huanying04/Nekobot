@@ -12,7 +12,7 @@ pixiv的PHPSESSID，在cookie裡，自己去找。因為做不出登入所以就
 * **SAUCENAO_KEY**  
 SauceNAO的用戶API KEY，用於搜尋圖片
 
-然後將打包好的jar以cmd開啟，或者直接在編譯器裡執行。
+然後將打包好的jar以cmd開啟，並且在同個資料夾放進剛剛改過的config.json。或者直接在IDE裡執行。
 
 # 功能
 * 隨機pixiv圖片
