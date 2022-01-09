@@ -14,7 +14,7 @@ public class MeowCommand implements ICommand {
     public void handle(CommandContext ctx) throws Exception {
         LOGGER.debug("偵測到指令{}，開始執行指令", getName());
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         String[] meow = {"喵", " ", ""};
         String[] end = {"！", "？", "", "喵"};
 

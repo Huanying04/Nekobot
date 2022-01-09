@@ -2,7 +2,7 @@ package net.nekomura.dcbot.listener;
 
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.nekomura.dcbot.Config;
 import net.nekomura.dcbot.commands.*;
@@ -33,7 +33,9 @@ public class CommandsListener extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+    public void onMessageReceived(MessageReceivedEvent event) {
+        if (!event.isFromGuild()) return;
+
         User user = event.getAuthor();
 
         if (user.isBot() || event.isWebhookMessage()) {

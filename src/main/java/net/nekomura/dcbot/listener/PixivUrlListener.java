@@ -2,7 +2,7 @@ package net.nekomura.dcbot.listener;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.nekomura.dcbot.Config;
 import net.nekomura.dcbot.enums.ConfigStringData;
@@ -18,7 +18,8 @@ public class PixivUrlListener extends ListenerAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(PixivUrlListener.class);
 
     @Override
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+    public void onMessageReceived(MessageReceivedEvent event) {
+        if (!event.isFromGuild()) return;
         User user = event.getAuthor();
 
         if (user.isBot() || event.isWebhookMessage()) {
@@ -40,7 +41,7 @@ public class PixivUrlListener extends ListenerAdapter {
                 IllustrationInfo info = Illustration.getInfo(id);
                 EmbedBuilder eb = new EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16));
 
-                if (info.isNSFW() && !event.getChannel().isNSFW()) {
+                if (info.isNSFW() && !event.getTextChannel().isNSFW()) {
                     LOGGER.debug("頻道不為NSFW且作品為R18作品，取消執行指令");
                     return;
                 }
@@ -68,7 +69,7 @@ public class PixivUrlListener extends ListenerAdapter {
                 eb.addField("頁碼", "0", true);
                 eb.addField("頁數", String.valueOf(info.getPageCount()), true);
 
-                event.getChannel().sendFile(image, info.getId() + "." + info.getImageFileFormat(0)).embed(eb.build()).queue();
+                event.getChannel().sendFile(image, info.getId() + "." + info.getImageFileFormat(0)).setEmbeds(eb.build()).queue();
 
                 LOGGER.debug("訊息發送完畢");
             }catch (Throwable e) {

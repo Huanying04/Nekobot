@@ -64,7 +64,7 @@ public class SauceCommand implements ICommand {
 
             EmbedBuilder eb = new EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16));
             eb.setDescription("訊息必須附帶圖片才能搜圖");
-            ctx.event.getChannel().sendMessage(eb.build()).queue();
+            ctx.event.getChannel().sendMessageEmbeds(eb.build()).queue();
             return;
         }
         if (!embeds.isEmpty()) {  //先以embed訊息為優先
@@ -78,7 +78,7 @@ public class SauceCommand implements ICommand {
 
                     EmbedBuilder eb = new EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16));
                     eb.setDescription("訊息必須附帶圖片才能搜圖");
-                    ctx.event.getChannel().sendMessage(eb.build()).queue();
+                    ctx.event.getChannel().sendMessageEmbeds(eb.build()).queue();
                     return;
                 }else if (image != null){  //如果有，則獲取圖片URL
                     url = image.getUrl();
@@ -106,7 +106,7 @@ public class SauceCommand implements ICommand {
 
                     EmbedBuilder eb = new EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16));
                     eb.setDescription("訊息必須附帶圖片才能搜圖");
-                    ctx.event.getChannel().sendMessage(eb.build()).queue();
+                    ctx.event.getChannel().sendMessageEmbeds(eb.build()).queue();
                 }
             }
         }
@@ -195,7 +195,7 @@ public class SauceCommand implements ICommand {
             eb.addField("結果", result, false);
             if (!warning.isEmpty())
                 eb.addField("提醒", warning, false);
-            ctx.event.getChannel().sendMessage(eb.build()).queue();
+            ctx.event.getChannel().sendMessageEmbeds(eb.build()).queue();
         }
     }
 }

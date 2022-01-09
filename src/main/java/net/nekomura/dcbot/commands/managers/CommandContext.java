@@ -1,16 +1,15 @@
 package net.nekomura.dcbot.commands.managers;
 
-import me.duncte123.botcommons.commands.ICommandContext;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.List;
 
 public class CommandContext implements ICommandContext {
-    public final GuildMessageReceivedEvent event;
+    public final MessageReceivedEvent event;
     public final List<String> args;
 
-    public CommandContext(GuildMessageReceivedEvent event, List<String> args) {
+    public CommandContext(MessageReceivedEvent event, List<String> args) {
         this.event = event;
         this.args = args;
     }
@@ -21,7 +20,7 @@ public class CommandContext implements ICommandContext {
     }
 
     @Override
-    public GuildMessageReceivedEvent getEvent() {
+    public MessageReceivedEvent getEvent() {
         return this.event;
     }
 

@@ -19,7 +19,7 @@ public class ShutdownCommand implements ICommand {
 
             EmbedBuilder eb = new EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16));
             eb.setDescription("已關閉");
-            ctx.event.getChannel().sendMessage(eb.build()).queue();
+            ctx.event.getChannel().sendMessageEmbeds(eb.build()).queue();
 
             Thread.sleep(1000);
 

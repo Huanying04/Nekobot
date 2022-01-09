@@ -69,7 +69,7 @@ public class IllustrationUtils {
         eb.addField("ID", "[" + artworkID + "](https://www.pixiv.net/artworks/" + artworkID + ")", true);
         eb.addField("頁碼", String.valueOf(artworkPage), true);
         eb.setImage("attachment://" + info.getId() + "." + type);
-        ctx.event.getChannel().sendFile(image, info.getId() + "." + type).embed(eb.build()).queue();
+        ctx.event.getChannel().sendFile(image, info.getId() + "." + type).setEmbeds(eb.build()).queue();
 
         LOGGER.debug("訊息發送完畢");
     }
@@ -80,7 +80,7 @@ public class IllustrationUtils {
 
             EmbedBuilder eb = new EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16));
             eb.setDescription("請輸入搜尋關鍵字。");
-            ctx.event.getChannel().sendMessage(eb.build()).queue();
+            ctx.event.getChannel().sendMessageEmbeds(eb.build()).queue();
             return;
         }
 
@@ -127,7 +127,7 @@ public class IllustrationUtils {
         if (tempResult.getResultCount() == 0) {
             EmbedBuilder eb = new EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16));
             eb.setDescription("沒有搜尋到圖。請嘗試使用其他關鍵字。");
-            ctx.event.getChannel().sendMessage(eb.build()).queue();
+            ctx.event.getChannel().sendMessageEmbeds(eb.build()).queue();
             return;
         }
 
@@ -152,6 +152,6 @@ public class IllustrationUtils {
         eb.addField("ID", "[" + artworkID + "](https://www.pixiv.net/artworks/" + artworkID + ")", true);
         eb.addField("頁碼", String.valueOf(artworkPage), true);
         eb.setImage("attachment://" + info.getId() + "." + type);
-        ctx.event.getChannel().sendFile(image, info.getId() + "." + type).embed(eb.build()).queue();
+        ctx.event.getChannel().sendFile(image, info.getId() + "." + type).setEmbeds(eb.build()).queue();
     }
 }

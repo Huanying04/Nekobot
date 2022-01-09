@@ -23,11 +23,11 @@ public class PixivIllustrationCommand implements ICommand {
         IllustrationInfo info = Illustration.getInfo(Integer.parseInt(ctx.args.get(0)));
         EmbedBuilder eb = new EmbedBuilder().setColor(Integer.parseInt(Config.get(ConfigStringData.EMBED_MESSAGE_COLOR),16));
 
-        if (info.isNSFW() && !ctx.event.getChannel().isNSFW()) {
+        if (info.isNSFW() && !ctx.event.getTextChannel().isNSFW()) {
             LOGGER.debug("頻道不為NSFW且作品為R18作品，取消執行指令");
 
             eb.setDescription("該作品為R18作品，請在限制級頻道裡執行此指令或使用其他作品ID");
-            ctx.event.getChannel().sendMessage(eb.build()).queue();
+            ctx.event.getChannel().sendMessageEmbeds(eb.build()).queue();
         }else {
             int page;
             boolean announcement = false;
@@ -64,7 +64,7 @@ public class PixivIllustrationCommand implements ICommand {
             if (announcement) {
                 eb.addField("提醒", "您輸入的頁碼`" + ctx.args.get(1) + "`大於或等於本作品總頁數(初始頁由`0`算起)`" + info.getPageCount() + "`。故將使用第`0`頁代替。", false);
             }
-            ctx.event.getChannel().sendFile(image, info.getId() + "." + info.getImageFileFormat(0)).embed(eb.build()).queue();
+            ctx.event.getChannel().sendFile(image, info.getId() + "." + info.getImageFileFormat(0)).setEmbeds(eb.build()).queue();
 
             LOGGER.debug("訊息發送完畢");
         }

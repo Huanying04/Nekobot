@@ -1,5 +1,6 @@
 package net.nekomura.dcbot;
 
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.nekomura.dcbot.enums.ConfigStringData;
 import net.nekomura.dcbot.listener.CommandsListener;
@@ -14,7 +15,7 @@ public class Main {
      * 使用之前請先將config.json中的TOKEN、OWNER、PIXIV_PUSH_NOTIFICATION_CHANNEL、PIXIV_R18_PUSH_NOTIFICATION_CHANNEL、MINECRAFT_PUSH_NOTIFICATION_CHANNEL、MINECRAFT_UPDATE_CHECKER、PIXIV_UPDATE_CHECKER、FOLLOW_PIXIV、SAUCENAO_KEY設定好
      */
     public static void main(String[] args) throws LoginException {
-        JDABuilder.createDefault(Config.get(ConfigStringData.TOKEN))
+        JDA jda = JDABuilder.createDefault(Config.get(ConfigStringData.TOKEN))
                 .addEventListeners(new CommandsListener(), new PixivUrlListener())
                 .build();
 

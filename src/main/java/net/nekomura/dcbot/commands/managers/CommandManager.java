@@ -1,6 +1,6 @@
 package net.nekomura.dcbot.commands.managers;
 
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.nekomura.dcbot.Config;
 import net.nekomura.dcbot.enums.ConfigStringData;
 
@@ -37,7 +37,7 @@ public class CommandManager {
         return null;
     }
 
-    public void handle(GuildMessageReceivedEvent event) throws Exception {
+    public void handle(MessageReceivedEvent event) throws Exception {
         try {
             String[] split = event.getMessage().getContentRaw()
                     .replaceFirst("(?i)" + Pattern.quote(Objects.requireNonNull(Config.get(ConfigStringData.PREFIX))), "")  //大小寫不敏感?
