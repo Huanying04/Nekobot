@@ -13,9 +13,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PixivUrlListener extends ListenerAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(PixivUrlListener.class);
+    private static final Pattern urlRegex = Pattern.compile("(http(s)?://)(www\\.)?pixiv\\.net/(en/)?artworks/[0-9]+((/)?(\\?)[a-zA-Z0-9.,%_=?&#-+()\\[\\]*$~@!:/{};']*)?", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
@@ -26,15 +29,19 @@ public class PixivUrlListener extends ListenerAdapter {
             return;
         }
 
-        String raw = event.getMessage().getContentRaw();
+        String raw = event.getMessage().getContentRaw().replace("/?", "?");
+        Matcher rawMatcher = urlRegex.matcher(raw);
 
-        if (raw.matches("http[s]?://(www\\.)?pixiv\\.net/artworks/[0-9]+")) {
+        if (rawMatcher.find()) {
+            int matchStart = rawMatcher.start(1);
+            int matchEnd = rawMatcher.end();
+            String url = raw.substring(matchStart, matchEnd);
             LOGGER.debug("偵測到pixiv網址，開始抓取作品資訊");
 
             try {
-                String[] args = raw.split("/");
+                String[] args = url.split("/");
 
-                int id = Integer.parseInt(args[args.length - 1]);
+                int id = Integer.parseInt(args[args.length - 1].split("\\?")[0]);
 
                 LOGGER.debug("開始抓取id為{}的插畫", id);
 
@@ -65,7 +72,7 @@ public class PixivUrlListener extends ListenerAdapter {
                 eb.addField("簡介", info.getRawDescription(), false);
                 eb.addField("標籤", Arrays.toString(info.getTags()), false);
                 eb.addField("作者", "[" + info.getAuthorName() + "](https://www.pixiv.net/users/" + info.getAuthorID() + ")", false);
-                eb.addField("ID", "[" + args[args.length - 1] + "](https://www.pixiv.net/artworks/" + args[args.length - 1] + ")", true);
+                eb.addField("ID", "[" + id + "](https://www.pixiv.net/artworks/" + id + ")", true);
                 eb.addField("頁碼", "0", true);
                 eb.addField("頁數", String.valueOf(info.getPageCount()), true);
 
