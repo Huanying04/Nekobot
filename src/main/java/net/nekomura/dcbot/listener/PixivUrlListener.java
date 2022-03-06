@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 
 public class PixivUrlListener extends ListenerAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(PixivUrlListener.class);
-    private static final Pattern urlRegex = Pattern.compile("(http(s)?://)(www\\.)?pixiv\\.net/(en/)?artworks/[0-9]+((/)?(\\?)[a-zA-Z0-9.,%_=?&#-+()\\[\\]*$~@!:/{};']*)?", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+    private static final Pattern urlRegex = Pattern.compile("(http(s)?://)(www\\.)?pixiv\\.net/(en/)?artworks/[0-9]+((/)?(\\?)[a-zA-Z0-9.,%_=?&#-+()\\[\\]*$~@!:/{};']*)?", Pattern.DOTALL);
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
