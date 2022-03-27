@@ -20,10 +20,39 @@ SauceNAO的用戶API KEY，用於搜尋圖片
 * 使用pixiv作品ID顯示作品
 * 搜尋pixiv插畫
 
-# 預覽
-## 隨機pixiv圖片
-![a](https://github.com/Huanying04/Nekobot/blob/master/images/RandomAnimeIllustration.PNG)
-## 以圖搜圖(動漫圖片)
-![sauce](https://github.com/Huanying04/Nekobot/blob/master/images/Sauce.PNG)
+# 主要功能
+## 指定pixiv作品
+指令格式: `s!pixiv [插畫id] <頁碼，可選>`
+
+參數:
+
+|  參數  |  說明  |
+|-------|--------|
+| 插畫id |pixiv插畫的id。|
+| 頁碼 |分享多頁插畫時可選的參數。頁碼預設為0，並從0開始數。若超過插畫最大頁數則自動歸正為0。|
+
+![pixiv](https://raw.github.com/Huanying04/Nekobot/master/images/Pixiv.PNG)
+
+## 偵測pixiv插畫網址
+機器人會自動偵測每條新訊息中是否含有pixiv插畫的網址並將圖片發出來。
+
+![pixiv](https://raw.github.com/Huanying04/Nekobot/master/images/PixivURL.PNG)
+
+## 隨機pixiv作品
+指令格式: `s!a`
+
+別名: `s!i`, `s!anime`
+
+![a](https://raw.githubusercontent.com/Huanying04/Nekobot/master/images/RandomAnimeIllustration.PNG)
+## 以圖搜圖(動漫圖)
+指令格式: `s!sauce [圖片]`
+
+參數:
+
+圖片必須以「附件」或「回覆含有圖片的訊息」出現。
+
+![sauce](https://raw.github.com/Huanying04/Nekobot/master/images/Sauce.PNG)
 ## 搜尋pixiv插畫
-![search](https://github.com/Huanying04/Nekobot/blob/master/images/Search.PNG)
+指令格式: `s!search [關鍵字]`
+
+![search](https://raw.github.com/Huanying04/Nekobot/master/images/Search.PNG)
